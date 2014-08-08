@@ -66,4 +66,18 @@ public class SteamApiTest {
         Assert.assertEquals("Name not correct", "Team Fortress Classic", steamApps.get(1).getName());
     }
 
+    @Test
+    public void shouldRetrieveDataForMultipleIdsWithArray() {
+        List<Long> appIds = new ArrayList<Long>();
+        appIds.add(10L);
+        appIds.add(20L);
+
+        Mockito.when(steamApiClient.retrieveResultBodyMap(appIds)).thenReturn(twoAppsBothSuccessResultMap);
+
+        List<SteamApp> steamApps = steamApiImpl.retrieveData(10L, 20L);
+
+        Assert.assertEquals("Name not correct", "Counter-Strike", steamApps.get(0).getName());
+        Assert.assertEquals("Name not correct", "Team Fortress Classic", steamApps.get(1).getName());
+    }
+
 }

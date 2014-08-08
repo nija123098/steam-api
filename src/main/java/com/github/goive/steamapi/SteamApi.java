@@ -9,7 +9,7 @@ import com.github.goive.steamapi.exceptions.SteamApiException;
  * Entry point for the APIs' external use.
  * 
  * @author Ivan Antes-Klobucar
- * @version 1.1.1
+ * @version 2.1
  */
 public interface SteamApi {
 
@@ -21,6 +21,16 @@ public interface SteamApi {
      * @throws SteamApiException if the retrieving went wrong or the appId is invalid.
      */
     SteamApp retrieveData(long appId) throws SteamApiException;
+
+    /**
+     * Retrieves a {@link List} of {@link SteamApp} objects for the given appIds. There will be no results for invalid
+     * appIds. The resulting list will only contain valid responses from the Steam API.
+     *
+     * @param appIds Array of unique IDs of the Steam application (visible in URL on Steam store page)
+     * @return {@link List} of {@link SteamApp} object containing information about the given appIds.
+     * @throws SteamApiException if the retrieving went wrong or the appId is invalid.
+     */
+    List<SteamApp> retrieveData(long... appIds) throws SteamApiException;
 
     /**
      * Retrieves a {@link List} of {@link SteamApp} objects for the given appIds. There will be no results for invalid
