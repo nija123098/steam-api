@@ -6,12 +6,15 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.goive.steamapi.data.SteamApp;
+import com.github.goive.steamapi.data.SteamAppBatchBuilder;
 
 public class SteamAppBuilderBatchTest extends AbstractSteamAppBuilderTest {
 
+    private SteamAppBatchBuilder builder = new SteamAppBatchBuilder();
+
     @Test
     public void shouldCreateSteamAppsFromTwoSuccessfullyRetrievedApps() {
-        List<SteamApp> apps = SteamAppBuilder.createListOfResultMaps(twoAppsBothSuccessResultMap);
+        List<SteamApp> apps = builder.withResultMap(twoAppsBothSuccessResultMap).build();
 
         Assert.assertNotNull(apps);
         Assert.assertEquals("Size not correct", 2, apps.size());
@@ -25,8 +28,8 @@ public class SteamAppBuilderBatchTest extends AbstractSteamAppBuilderTest {
 
     @Test
     public void shouldCreateOneSteamAppFromTwoRequestedButOnlyOneSuccessfullyRetrieved() {
-        List<SteamApp> apps = SteamAppBuilder.createListOfResultMaps(twoAppsOneSuccessResultMap);
-        
+        List<SteamApp> apps = builder.withResultMap(twoAppsOneSuccessResultMap).build();
+
         Assert.assertNotNull(apps);
         Assert.assertEquals("Size not correct", 1, apps.size());
     }
