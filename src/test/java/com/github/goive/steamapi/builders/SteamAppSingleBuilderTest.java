@@ -12,14 +12,17 @@ import org.junit.Test;
 import com.github.goive.steamapi.data.Category;
 import com.github.goive.steamapi.data.Price;
 import com.github.goive.steamapi.data.SteamApp;
+import com.github.goive.steamapi.data.SteamAppSingleBuilder;
 import com.github.goive.steamapi.enums.Type;
 import com.github.goive.steamapi.exceptions.InvalidAppIdException;
 
-public class SteamAppBuilderSingleTest extends AbstractSteamAppBuilderTest {
+public class SteamAppSingleBuilderTest extends AbstractSteamAppBuilderTest {
+
+    private SteamAppSingleBuilder builder = new SteamAppSingleBuilder();
 
     @Test
     public void shouldCreateSteamApp() throws InvalidAppIdException {
-        SteamApp steamApp = SteamAppBuilder.createFromResultMap(halfLifeResultMap);
+        SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertNotNull(steamApp);
         Assert.assertTrue(steamApp instanceof SteamApp);
@@ -27,7 +30,7 @@ public class SteamAppBuilderSingleTest extends AbstractSteamAppBuilderTest {
 
     @Test
     public void shouldContaintCorrectPriceData() throws InvalidAppIdException {
-        SteamApp steamApp = SteamAppBuilder.createFromResultMap(halfLifeResultMap);
+        SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
         Price price = steamApp.getPrice();
 
         Assert.assertEquals("Currency not correct", Currency.getInstance("EUR"), price.getCurrency());
@@ -38,7 +41,7 @@ public class SteamAppBuilderSingleTest extends AbstractSteamAppBuilderTest {
 
     @Test
     public void shouldContaintCorrectSupportedLanguages() throws InvalidAppIdException {
-        SteamApp steamApp = SteamAppBuilder.createFromResultMap(halfLifeResultMap);
+        SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertEquals("SupportedLanguages size not correct", 8, steamApp.getSupportedLanguages().size());
         Assert.assertTrue(steamApp.getSupportedLanguages().contains("Italian"));
@@ -47,7 +50,7 @@ public class SteamAppBuilderSingleTest extends AbstractSteamAppBuilderTest {
 
     @Test
     public void shouldContaintCorrectGenericData() throws InvalidAppIdException {
-        SteamApp steamApp = SteamAppBuilder.createFromResultMap(halfLifeResultMap);
+        SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertEquals("AppId not correct", HALF_LIFE_APP_ID, steamApp.getAppId());
         Assert.assertEquals("Type not correct", Type.GAME, steamApp.getType());
@@ -64,7 +67,7 @@ public class SteamAppBuilderSingleTest extends AbstractSteamAppBuilderTest {
 
     @Test
     public void shouldContainCorrectMarketInfo() {
-        SteamApp steamApp = SteamAppBuilder.createFromResultMap(halfLifeResultMap);
+        SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertEquals("Not all developers are present", 1, steamApp.getDevelopers().size());
         Assert.assertTrue(steamApp.getDevelopers().contains("Valve"));
@@ -75,7 +78,7 @@ public class SteamAppBuilderSingleTest extends AbstractSteamAppBuilderTest {
 
     @Test
     public void shouldContainCorrectPlatformData() {
-        SteamApp steamApp = SteamAppBuilder.createFromResultMap(halfLifeResultMap);
+        SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertTrue("Linux availability", steamApp.isAvailableForLinux());
         Assert.assertTrue("Windows availability", steamApp.isAvailableForWindows());
@@ -84,7 +87,7 @@ public class SteamAppBuilderSingleTest extends AbstractSteamAppBuilderTest {
 
     @Test
     public void shouldContainCorrectCategories() {
-        SteamApp steamApp = SteamAppBuilder.createFromResultMap(halfLifeResultMap);
+        SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertEquals("Incorrect amount of categories", 3, steamApp.getCategories().size());
 
@@ -94,7 +97,7 @@ public class SteamAppBuilderSingleTest extends AbstractSteamAppBuilderTest {
 
     @Test
     public void shouldContainReleaseDataWhenThreeFields() throws ParseException {
-        SteamApp steamApp = SteamAppBuilder.createFromResultMap(halfLifeResultMap);
+        SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date releaseDate = sdf.parse("8/11/1998");
@@ -104,7 +107,7 @@ public class SteamAppBuilderSingleTest extends AbstractSteamAppBuilderTest {
 
     @Test
     public void shouldContainReleaseDataWhenTwoFields() throws ParseException {
-        SteamApp steamApp = SteamAppBuilder.createFromResultMap(halfLifeResultMapWithTwoFieldReleaseDate);
+        SteamApp steamApp = builder.withResultMap(halfLifeResultMapWithTwoFieldReleaseDate).build();
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
         Date releaseDate = sdf.parse("11/1998");
@@ -114,21 +117,21 @@ public class SteamAppBuilderSingleTest extends AbstractSteamAppBuilderTest {
 
     @Test
     public void shouldHandleFreeToPlayGame() {
-        SteamApp steamApp = SteamAppBuilder.createFromResultMap(freeToPlayResultMap);
+        SteamApp steamApp = builder.withResultMap(freeToPlayResultMap).build();
 
         Assert.assertNull(steamApp.getPrice());
     }
 
     @Test
     public void shouldHandleOneDigitReleaseDate() {
-        SteamApp steamApp = SteamAppBuilder.createFromResultMap(oneDigitReleaseDayResultMap);
+        SteamApp steamApp = builder.withResultMap(oneDigitReleaseDayResultMap).build();
 
         Assert.assertNotNull(steamApp.getReleaseDate());
     }
 
     @Test
     public void shouldContainMetacriticData() {
-        SteamApp steamApp = SteamAppBuilder.createFromResultMap(halfLifeResultMap);
+        SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertEquals("Metacritic score not correct", Integer.valueOf(96), steamApp.getMetacriticScore());
         Assert.assertEquals("Metacritic url not correct", "http://www.metacritic.com/game/pc/half-life",
@@ -137,7 +140,7 @@ public class SteamAppBuilderSingleTest extends AbstractSteamAppBuilderTest {
 
     @Test
     public void shouldContainSupportInfo() {
-        SteamApp steamApp = SteamAppBuilder.createFromResultMap(halfLifeResultMap);
+        SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertNotNull(steamApp.getSupportInfo());
         Assert.assertEquals("URL not correct", "http://www.google.com", steamApp.getSupportInfo().getUrl().toString());
