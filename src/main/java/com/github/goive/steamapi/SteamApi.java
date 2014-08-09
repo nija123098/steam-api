@@ -43,8 +43,18 @@ public interface SteamApi {
      */
     List<SteamApp> retrieveData(List<Long> appIds) throws SteamApiException;
 
+    /**
+     * Sets the country code to use for the API call. This code determines the returned price and currency.
+     * 
+     * @param countryCode {@link CountryCode} for the call.
+     */
     void setCountryCode(CountryCode countryCode);
 
+    /**
+     * Returns the currently set {@link CountryCode}. Calls to the API will return the currency based on this code.
+     * 
+     * @return
+     */
     CountryCode getCountryCode();
 
 }
