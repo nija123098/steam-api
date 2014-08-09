@@ -9,13 +9,14 @@ import com.github.goive.steamapi.client.SteamApiClientImpl;
 import com.github.goive.steamapi.data.SteamApp;
 import com.github.goive.steamapi.data.SteamAppBatchBuilder;
 import com.github.goive.steamapi.data.SteamAppSingleBuilder;
+import com.github.goive.steamapi.enums.CountryCode;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 
 public class SteamApiImpl implements SteamApi {
 
-    public SteamApp retrieveData(long appId) throws SteamApiException {
-        SteamApiClient client = new SteamApiClientImpl();
+    private SteamApiClient client = new SteamApiClientImpl();
 
+    public SteamApp retrieveData(long appId) throws SteamApiException {
         Map<Object, Object> bodyMapForId = client.retrieveResultBodyMap(appId);
 
         return new SteamAppSingleBuilder().withResultMap(bodyMapForId).build();
@@ -30,11 +31,19 @@ public class SteamApiImpl implements SteamApi {
     }
 
     public List<SteamApp> retrieveData(List<Long> appIds) throws SteamApiException {
-        SteamApiClient client = new SteamApiClientImpl();
-
         Map<Object, Object> resultBodyMap = client.retrieveResultBodyMap(appIds);
 
         return new SteamAppBatchBuilder().withResultMap(resultBodyMap).build();
+    }
+
+    @Override
+    public void setCountryCode(CountryCode countryCode) {
+        client.setCountryCode(countryCode);
+    }
+
+    @Override
+    public CountryCode getCountryCode() {
+        return client.getCountryCode();
     }
 
 }

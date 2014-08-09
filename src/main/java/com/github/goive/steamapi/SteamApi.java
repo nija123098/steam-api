@@ -3,6 +3,7 @@ package com.github.goive.steamapi;
 import java.util.List;
 
 import com.github.goive.steamapi.data.SteamApp;
+import com.github.goive.steamapi.enums.CountryCode;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 
 /**
@@ -41,5 +42,9 @@ public interface SteamApi {
      * @throws SteamApiException if the retrieving went wrong or the appId is invalid.
      */
     List<SteamApp> retrieveData(List<Long> appIds) throws SteamApiException;
+
+    void setCountryCode(CountryCode countryCode);
+
+    CountryCode getCountryCode();
 
 }
