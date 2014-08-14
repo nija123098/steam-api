@@ -3,6 +3,7 @@ package com.github.goive.steamapi.client;
 import java.util.List;
 import java.util.Map;
 
+import com.github.goive.steamapi.enums.CountryCode;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 
 /**
@@ -31,4 +32,7 @@ public interface SteamApiClient {
      */
     Map<Object, Object> retrieveResultBodyMap(List<Long> appIds) throws SteamApiException;
 
+    public CountryCode getCountryCode();
+
+    public void setCountryCode(CountryCode countryCode);
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.goive.steamapi.enums.CountryCode;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 
 public class SteamApiClientTest extends AbstractSteamApiClientTest {
@@ -29,6 +30,26 @@ public class SteamApiClientTest extends AbstractSteamApiClientTest {
     public void shouldFailToCallSteamApi() throws SteamApiException {
         client = new SteamApiClientImpl("invalidurl");
         client.retrieveResultBodyMap(HALF_LIFE_APP_ID);
+    }
+
+    @Test
+    public void shouldRetrieveCorrectCurrencyForCountryCodeUS() {
+        client = new SteamApiClientImpl();
+        client.setCountryCode(CountryCode.US);
+
+        Map<Object, Object> resultBodyMap = client.retrieveResultBodyMap(10180L);
+
+        Assert.assertTrue(resultBodyMap.toString().contains("currency=USD"));
+    }
+
+    @Test
+    public void shouldRetrieveCorrectCurrencyForCountryCodeRU() {
+        client = new SteamApiClientImpl();
+        client.setCountryCode(CountryCode.RU);
+
+        Map<Object, Object> resultBodyMap = client.retrieveResultBodyMap(10180L);
+
+        Assert.assertTrue(resultBodyMap.toString().contains("currency=RUB"));
     }
 
 }
