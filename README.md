@@ -88,5 +88,5 @@ Maven dependency:
 	<dependency>
 		<groupId>com.github.go-ive</groupId>
 		<artifactId>steam-api</artifactId>
-		<version>2.1</version>
+		<version>2.1.1</version>
 	</dependency>
