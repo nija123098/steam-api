@@ -86,8 +86,10 @@ This retrieves almost all available data for the given Steam ID or list of IDs, 
 
 Maven dependency:
 
-	<dependency>
-		<groupId>com.github.go-ive</groupId>
-		<artifactId>steam-api</artifactId>
-		<version>2.1.1</version>
-	</dependency>
+```xml
+<dependency>
+    <groupId>com.github.go-ive</groupId>
+    <artifactId>steam-api</artifactId>
+    <version>2.1.1</version>
+</dependency>
+```
