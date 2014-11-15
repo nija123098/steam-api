@@ -1,20 +1,19 @@
 package com.github.goive.steamapi.builders;
 
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Currency;
-import java.util.Date;
-
-import org.junit.Assert;
-import org.junit.Test;
-
 import com.github.goive.steamapi.data.Category;
 import com.github.goive.steamapi.data.Price;
 import com.github.goive.steamapi.data.SteamApp;
 import com.github.goive.steamapi.data.SteamAppSingleBuilder;
 import com.github.goive.steamapi.enums.Type;
 import com.github.goive.steamapi.exceptions.InvalidAppIdException;
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Currency;
+import java.util.Date;
 
 public class SteamAppSingleBuilderTest extends AbstractSteamAppBuilderTest {
 
@@ -25,7 +24,6 @@ public class SteamAppSingleBuilderTest extends AbstractSteamAppBuilderTest {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertNotNull(steamApp);
-        Assert.assertTrue(steamApp instanceof SteamApp);
     }
 
     @Test

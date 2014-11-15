@@ -1,13 +1,13 @@
 package com.github.goive.steamapi.builders;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
 
 public abstract class AbstractSteamAppBuilderTest {
 
@@ -26,7 +26,7 @@ public abstract class AbstractSteamAppBuilderTest {
     }
 
     @SuppressWarnings("unchecked")
-    private void initMaps() throws IOException, JsonParseException, JsonMappingException {
+    private void initMaps() throws IOException, JsonMappingException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         halfLifeResultMap = objectMapper.readValue(new File("src/test/resources/app_id_70.json"), Map.class);

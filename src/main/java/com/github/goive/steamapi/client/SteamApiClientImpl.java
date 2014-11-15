@@ -69,28 +69,6 @@ public class SteamApiClientImpl implements SteamApiClient {
         return resultMap;
     }
 
-    @Override
-    public Map<Object, Object> retrieveResultBodyMap(List<Long> appIds) throws SteamApiException {
-        if (appIds == null || appIds.isEmpty()) {
-            throw new SteamApiException("No appIds given.");
-        }
-
-        if (appIds.size() > MAX_APPIDS) {
-            throw new SteamApiException("Too many appIds given. Maximum is " + MAX_APPIDS);
-        }
-
-        if (appIds.size() == 1) {
-            return retrieveResultBodyMap(appIds.get(0));
-        }
-
-        Map<Object, Object> resultMap = new HashMap<Object, Object>();
-
-        String appIdCsvList = StringUtils.join(appIds, ",");
-        resultMap = fetchResultMap(appIdCsvList);
-
-        return resultMap;
-    }
-
     public CountryCode getCountryCode() {
         return countryCode;
     }
