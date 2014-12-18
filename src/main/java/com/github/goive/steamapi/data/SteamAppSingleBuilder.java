@@ -135,7 +135,7 @@ public class SteamAppSingleBuilder {
         Map<Object, Object> priceOverview = (Map<Object, Object>)dataMap.get(PRICE_OVERVIEW);
 
         if (priceOverview == null) {
-            logger.info("No price data found. Assuming " + appId + " is free to play.");
+            logger.info("No price data found. Assuming " + name + " is free to play.");
             return;
         }
 
