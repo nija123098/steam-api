@@ -14,17 +14,16 @@ import java.util.Map;
  */
 public class AppIdChecker {
 
-    private static Logger logger = Logger.getLogger(AppIdChecker.class);
+    private static final Logger logger = Logger.getLogger(AppIdChecker.class);
 
-    private String validIdsUrl = "http://api.steampowered.com/ISteamApps/GetAppList/v0001/";
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @SuppressWarnings("unchecked")
     private Map<Object, Object> fetchResultMap() {
         Map<Object, Object> resultMap;
 
         try {
-            URL src = new URL(validIdsUrl);
+            URL src = new URL("http://api.steampowered.com/ISteamApps/GetAppList/v0001/");
             resultMap = mapper.readValue(src, Map.class);
         } catch (IOException e) {
             throw new SteamApiException(e);

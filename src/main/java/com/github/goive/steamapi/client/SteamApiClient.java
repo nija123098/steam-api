@@ -1,6 +1,5 @@
 package com.github.goive.steamapi.client;
 
-import java.util.List;
 import java.util.Map;
 
 import com.github.goive.steamapi.enums.CountryCode;

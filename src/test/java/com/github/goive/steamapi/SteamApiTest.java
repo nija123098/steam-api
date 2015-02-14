@@ -2,7 +2,6 @@ package com.github.goive.steamapi;
 
 import com.github.goive.steamapi.client.SteamApiClient;
 import com.github.goive.steamapi.data.SteamApp;
-import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;
@@ -31,7 +30,7 @@ public class SteamApiTest {
 
     @SuppressWarnings("unchecked")
     @Before
-    public void setup() throws JsonMappingException, IOException {
+    public void setup() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         halfLifeResultMap = objectMapper.readValue(new File("src/test/resources/app_id_70.json"), Map.class);

@@ -3,10 +3,8 @@ package com.github.goive.steamapi.client;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.github.goive.steamapi.enums.CountryCode;
@@ -21,7 +19,7 @@ import com.github.goive.steamapi.exceptions.SteamApiException;
 public class SteamApiClientImpl implements SteamApiClient {
 
     private String apiUrl = "http://store.steampowered.com/api/appdetails?appids=";
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
     private CountryCode countryCode;
 
     public SteamApiClientImpl() {
@@ -49,7 +47,7 @@ public class SteamApiClientImpl implements SteamApiClient {
 
     @SuppressWarnings("unchecked")
     private Map<Object, Object> fetchResultMap(String appIds) {
-        Map<Object, Object> resultMap = new HashMap<Object, Object>();
+        Map<Object, Object> resultMap;
 
         try {
             URL src = new URL(apiUrl + appIds + "&cc=" + countryCode.name());
@@ -63,9 +61,7 @@ public class SteamApiClientImpl implements SteamApiClient {
 
     @Override
     public Map<Object, Object> retrieveResultBodyMap(long appId) throws SteamApiException {
-        Map<Object, Object> resultMap = fetchResultMap(appId + "");
-
-        return resultMap;
+        return fetchResultMap(appId + "");
     }
 
     public CountryCode getCountryCode() {

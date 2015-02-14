@@ -222,11 +222,7 @@ public final class SteamApp implements Comparable<SteamApp> {
      * @return true if game is free to play.
      */
     public boolean isFreeToPlay() {
-        if (price == null) {
-            return true;
-        }
-
-        return false;
+        return price == null;
     }
 
 }

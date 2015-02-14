@@ -141,9 +141,9 @@ public class SteamAppSingleBuilder {
 
         price = new Price();
         price.setCurrency(Currency.getInstance((String)priceOverview.get(CURRENCY)));
-        price.setInitialPrice(new BigDecimal(String.valueOf((Integer)priceOverview.get(INITIAL)))
+        price.setInitialPrice(new BigDecimal(String.valueOf(priceOverview.get(INITIAL)))
             .divide(new BigDecimal(100)));
-        price.setFinalPrice(new BigDecimal(String.valueOf((Integer)priceOverview.get(FINAL)))
+        price.setFinalPrice(new BigDecimal(String.valueOf(priceOverview.get(FINAL)))
             .divide(new BigDecimal(100)));
         price.setDiscountPercent((Integer)priceOverview.get(DISCOUNT_PERCENT));
     }
