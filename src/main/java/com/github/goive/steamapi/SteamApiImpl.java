@@ -6,6 +6,7 @@ import com.github.goive.steamapi.client.SteamApiClientImpl;
 import com.github.goive.steamapi.data.SteamApp;
 import com.github.goive.steamapi.data.SteamAppSingleBuilder;
 import com.github.goive.steamapi.enums.CountryCode;
+import com.github.goive.steamapi.exceptions.InvalidAppIdException;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 
 import java.util.Map;
@@ -22,7 +23,7 @@ public class SteamApiImpl implements SteamApi {
             return new SteamAppSingleBuilder().withResultMap(bodyMapForId).build();
         }
 
-        throw new SteamApiException("AppId does not exist on Steam");
+        throw new InvalidAppIdException(appId + "");
     }
 
     @Override
