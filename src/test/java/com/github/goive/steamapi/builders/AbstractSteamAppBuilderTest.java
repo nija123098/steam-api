@@ -1,6 +1,5 @@
 package com.github.goive.steamapi.builders;
 
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 

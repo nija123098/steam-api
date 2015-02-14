@@ -165,7 +165,7 @@ public class SteamAppSingleBuilder {
 
     @SuppressWarnings(UNCHECKED)
     private void parseCategorieData(Map<Object, Object> dataMap) {
-        categories = new ArrayList<Category>();
+        categories = new ArrayList<>();
 
         List<Object> categoriesMap = (List<Object>)dataMap.get(CATEGORIES);
         if (categoriesMap == null) {

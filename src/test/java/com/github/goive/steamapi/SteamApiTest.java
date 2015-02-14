@@ -2,7 +2,6 @@ package com.github.goive.steamapi;
 
 import com.github.goive.steamapi.client.SteamApiClient;
 import com.github.goive.steamapi.data.SteamApp;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Before;
