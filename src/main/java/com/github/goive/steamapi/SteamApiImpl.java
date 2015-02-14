@@ -1,5 +1,6 @@
 package com.github.goive.steamapi;
 
+import com.github.goive.steamapi.client.AppIdChecker;
 import com.github.goive.steamapi.client.SteamApiClient;
 import com.github.goive.steamapi.client.SteamApiClientImpl;
 import com.github.goive.steamapi.data.SteamApp;
@@ -14,9 +15,14 @@ public class SteamApiImpl implements SteamApi {
     private SteamApiClient client = new SteamApiClientImpl();
 
     public SteamApp retrieveData(long appId) throws SteamApiException {
-        Map<Object, Object> bodyMapForId = client.retrieveResultBodyMap(appId);
+        AppIdChecker appIdChecker = new AppIdChecker();
+        if (appIdChecker.existsAppIdOnSteam(appId)) {
+            Map<Object, Object> bodyMapForId = client.retrieveResultBodyMap(appId);
 
-        return new SteamAppSingleBuilder().withResultMap(bodyMapForId).build();
+            return new SteamAppSingleBuilder().withResultMap(bodyMapForId).build();
+        }
+
+        throw new SteamApiException("AppId does not exist on Steam");
     }
 
     @Override
