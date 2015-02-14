@@ -13,7 +13,7 @@ import com.github.goive.steamapi.enums.Type;
 /**
  * Represents an application entry from the Steam database. Fields may be empty if there was no entry in the
  * corresponding JSON object.
- * 
+ *
  * @author Ivan Antes-Klobucar
  * @version 2.1
  */
@@ -41,10 +41,10 @@ public final class SteamApp implements Comparable<SteamApp> {
     private final SupportInfo supportInfo;
 
     SteamApp(long appId, Type type, String name, int requiredAge, String detailedDescription, String aboutTheGame,
-            List<String> supportedLanguages, String headerImage, String website, Price price, List<String> developers,
-            List<String> publishers, boolean availableForLinux, boolean availableForWindows, boolean availableForMac,
-            List<Category> categories, Date releaseDate, Integer metacriticScore, String metacriticUrl,
-            SupportInfo supportInfo) {
+             List<String> supportedLanguages, String headerImage, String website, Price price, List<String> developers,
+             List<String> publishers, boolean availableForLinux, boolean availableForWindows, boolean availableForMac,
+             List<Category> categories, Date releaseDate, Integer metacriticScore, String metacriticUrl,
+             SupportInfo supportInfo) {
         this.appId = appId;
         this.type = type;
         this.name = name;
@@ -71,6 +71,11 @@ public final class SteamApp implements Comparable<SteamApp> {
         return appId;
     }
 
+    /**
+     * Returns the application type as {@link com.github.goive.steamapi.enums.Type} enum. This is usually "game".
+     *
+     * @return {@link com.github.goive.steamapi.enums.Type} of the application
+     */
     public Type getType() {
         return type;
     }
@@ -137,7 +142,7 @@ public final class SteamApp implements Comparable<SteamApp> {
 
     /**
      * Returns pricing information of the application.
-     * 
+     *
      * @return {@link Price} containing further pricing information. If empty, the application is free.
      */
     public Price getPrice() {
@@ -146,7 +151,7 @@ public final class SteamApp implements Comparable<SteamApp> {
 
     /**
      * Returns a list of categories for the application.
-     * 
+     *
      * @return A list of {@link Category} objects containing categories like "single player".
      */
     public List<Category> getCategories() {
@@ -155,7 +160,7 @@ public final class SteamApp implements Comparable<SteamApp> {
 
     /**
      * Returns support information for the applications like e-mail address and url.
-     * 
+     *
      * @return {@link SupportInfo} object containing data about the application.
      */
     public SupportInfo getSupportInfo() {
@@ -165,8 +170,8 @@ public final class SteamApp implements Comparable<SteamApp> {
     @Override
     public int hashCode() {
         return new HashCodeBuilder() //
-            .append(appId) //
-            .hashCode();
+                .append(appId) //
+                .hashCode();
     }
 
     @Override
@@ -179,46 +184,46 @@ public final class SteamApp implements Comparable<SteamApp> {
             return false;
         }
 
-        SteamApp other = (SteamApp)obj;
+        SteamApp other = (SteamApp) obj;
 
         return new EqualsBuilder() //
-            .append(appId, other.appId) //
-            .isEquals();
+                .append(appId, other.appId) //
+                .isEquals();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(appId) //
-            .append(type) //
-            .append(name) //
-            .append(requiredAge) //
-            .append(detailedDescription) //
-            .append(aboutTheGame) //
-            .append(supportedLanguages) //
-            .append(headerImage) //
-            .append(website) //
-            .append(price) //
-            .append(developers) //
-            .append(publishers) //
-            .append(availableForLinux) //
-            .append(availableForWindows) //
-            .append(availableForMac) //
-            .append(categories) //
-            .append(releaseDate) //
-            .append(metacriticScore) //
-            .append(metacriticUrl) //
-            .append(supportInfo) //
-            .toString();
+                .append(type) //
+                .append(name) //
+                .append(requiredAge) //
+                .append(detailedDescription) //
+                .append(aboutTheGame) //
+                .append(supportedLanguages) //
+                .append(headerImage) //
+                .append(website) //
+                .append(price) //
+                .append(developers) //
+                .append(publishers) //
+                .append(availableForLinux) //
+                .append(availableForWindows) //
+                .append(availableForMac) //
+                .append(categories) //
+                .append(releaseDate) //
+                .append(metacriticScore) //
+                .append(metacriticUrl) //
+                .append(supportInfo) //
+                .toString();
     }
 
     @Override
     public int compareTo(SteamApp other) {
-        return (int)(this.appId - other.appId);
+        return (int) (this.appId - other.appId);
     }
 
     /**
      * Convenient check for free to play game.
-     * 
+     *
      * @return true if game is free to play.
      */
     public boolean isFreeToPlay() {
