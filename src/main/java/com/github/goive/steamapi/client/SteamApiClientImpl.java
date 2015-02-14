@@ -20,7 +20,6 @@ import com.github.goive.steamapi.exceptions.SteamApiException;
  */
 public class SteamApiClientImpl implements SteamApiClient {
 
-    private static final int MAX_APPIDS = 1000;
     private String apiUrl = "http://store.steampowered.com/api/appdetails?appids=";
     private ObjectMapper mapper = new ObjectMapper();
     private CountryCode countryCode;
