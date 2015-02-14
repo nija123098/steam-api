@@ -93,3 +93,13 @@ Maven dependency:
     <version>2.1.2</version>
 </dependency>
 ```
+
+If you are interested in the version currently in the master branch, you can use the SNAPSHOT version. I do not recommend this for production use as this build is changing. 
+
+```xml
+<dependency>
+    <groupId>com.github.go-ive</groupId>
+    <artifactId>steam-api</artifactId>
+    <version>2.1.3-SNAPSHOT</version>
+</dependency>
+```
