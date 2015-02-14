@@ -2,6 +2,7 @@ Java Steam API
 =========
 
 [![Build Status](https://drone.io/github.com/go-ive/steam-api/status.png)](https://drone.io/github.com/go-ive/steam-api/latest)
+[![Build Status](https://travis-ci.org/go-ive/steam-api.svg?branch=master)](https://travis-ci.org/go-ive/steam-api)
 
 A Java library to retrieve data from Valves Steam platform.
 
