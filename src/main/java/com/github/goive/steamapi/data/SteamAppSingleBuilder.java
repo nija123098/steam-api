@@ -177,7 +177,7 @@ public class SteamAppSingleBuilder {
             Map<Object, Object> categoryItemMap = (Map<Object, Object>)categoryObject;
 
             String description = (String)categoryItemMap.get(DESCRIPTION);
-            int id = Integer.parseInt((String)categoryItemMap.get(ID));
+            int id = Integer.parseInt(categoryItemMap.get(ID).toString());
 
             categories.add(new Category(id, description));
         });
