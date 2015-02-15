@@ -116,6 +116,6 @@ If you are interested in the version currently in the master branch, you can use
 <dependency>
     <groupId>com.github.go-ive</groupId>
     <artifactId>steam-api</artifactId>
-    <version>2.1.3-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
 </dependency>
 ```
