@@ -86,7 +86,9 @@ public class DemoApp {
 
 This retrieves almost all available data for the given Steam ID ~~or list of IDs,~~ including prices and discounts.
 
-## Maven Dependency
+## Stable Release
+
+### Maven
 
 ```xml
 <dependency>
@@ -96,7 +98,7 @@ This retrieves almost all available data for the given Steam ID ~~or list of IDs
 </dependency>
 ```
 
-## Gradle Dependency
+### Gradle
 
 ```gradle
 dependencies {
@@ -104,11 +106,11 @@ dependencies {
 }
 ```
 
-## Direct Download
+### Direct Download
 
 Or download the JAR directly from [Maven Central](http://search.maven.org/remotecontent?filepath=com/github/go-ive/steam-api/2.1.2/steam-api-2.1.2.jar).
 
-## Nightly Snapshot Build
+## Nightly Build
 
 If you are interested in the version currently in the master branch, you can use the SNAPSHOT version. I do not recommend this for production use as this build is changing. 
 
@@ -118,4 +120,10 @@ If you are interested in the version currently in the master branch, you can use
     <artifactId>steam-api</artifactId>
     <version>3.0.0-SNAPSHOT</version>
 </dependency>
+```
+
+```gradle
+dependencies {
+    compile 'com.github.go-ive:steam-api:3.0.0-SNAPSHOT'
+}
 ```
