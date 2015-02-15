@@ -1,7 +1,9 @@
 Java Steam API
 =========
 
-[![Build Status](https://drone.io/github.com/go-ive/steam-api/status.png)](https://drone.io/github.com/go-ive/steam-api/latest)
+[![Build Status](https://travis-ci.org/go-ive/steam-api.svg?branch=master)](https://travis-ci.org/go-ive/steam-api)&nbsp;
+[![Coverage Status](https://coveralls.io/repos/go-ive/steam-api/badge.svg?branch=master)](https://coveralls.io/r/go-ive/steam-api?branch=master)&nbsp;
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.go-ive/steam-api/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.go-ive/steam-api)
 
 A Java library to retrieve data from Valves Steam platform.
 
@@ -90,6 +92,16 @@ Maven dependency:
 <dependency>
     <groupId>com.github.go-ive</groupId>
     <artifactId>steam-api</artifactId>
-    <version>2.1.1</version>
+    <version>2.1.2</version>
+</dependency>
+```
+
+If you are interested in the version currently in the master branch, you can use the SNAPSHOT version. I do not recommend this for production use as this build is changing.
+
+```xml
+<dependency>
+    <groupId>com.github.go-ive</groupId>
+    <artifactId>steam-api</artifactId>
+    <version>2.1.3-SNAPSHOT</version>
 </dependency>
 ```
