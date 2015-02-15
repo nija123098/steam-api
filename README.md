@@ -5,9 +5,9 @@ Java Steam API
 [![Coverage Status](https://coveralls.io/repos/go-ive/steam-api/badge.svg?branch=master)](https://coveralls.io/r/go-ive/steam-api?branch=master)&nbsp;
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.go-ive/steam-api/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.go-ive/steam-api)
 
-A Java library to retrieve data from Valves Steam platform.
+A Java library to retrieve data from Valves Steam platform. It uses the [Steam Storefront API](https://wiki.teamfortress.com/wiki/User:RJackson/StorefrontAPI), which is not inteded for public use and may change anytime (it already happened). I try to react as quickly as possible when this happens and release a new compatible version, but features might be changed or missing.
 
-You can use it like in this demo application:
+## Usage
 
 ```java
 package com.github.goive.steamapidemo;
@@ -84,9 +84,9 @@ public class DemoApp {
 }
 ```
 
-This retrieves almost all available data for the given Steam ID or list of IDs, including prices and discounts.
+This retrieves almost all available data for the given Steam ID ~~or list of IDs,~~ including prices and discounts.
 
-Maven dependency:
+## Maven Dependency
 
 ```xml
 <dependency>
@@ -95,6 +95,20 @@ Maven dependency:
     <version>2.1.2</version>
 </dependency>
 ```
+
+## Gradle Dependency
+
+```gradle
+dependencies {
+    compile 'com.github.go-ive:steam-api:2.1.2'
+}
+```
+
+## Direct Download
+
+Or download the JAR directly from [Maven Central](http://search.maven.org/remotecontent?filepath=com/github/go-ive/steam-api/2.1.2/steam-api-2.1.2.jar).
+
+## Nightly Snapshot Build
 
 If you are interested in the version currently in the master branch, you can use the SNAPSHOT version. I do not recommend this for production use as this build is changing.
 
