@@ -84,7 +84,7 @@ public class DemoApp {
 }
 ```
 
-This retrieves almost all available data for the given Steam ID or list of IDs, including prices and discounts.
+This retrieves almost all available data for the given Steam ID ~~or list of IDs,~~ including prices and discounts.
 
 Maven dependency:
 
