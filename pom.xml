@@ -10,11 +10,13 @@
     <description>Retrieve data from Valves steam platform</description>
     <url>http://github.com/go-ive/steam-api</url>
 
-    <scm>
-        <connection>scm:git:git@github.com/go-ive/steam-api.git</connection>
-        <developerConnection>scm:git:github.com/go-ive/steam-api.git</developerConnection>
-        <url>git@github.com:go-ive/steam-api.git</url>
-    </scm>
+    <developers>
+        <developer>
+            <name>Ivan Antes-Klobucar</name>
+            <email>ivan.antesklobucar@gmail.com</email>
+            <organizationUrl>http://github.com/go-ive</organizationUrl>
+        </developer>
+    </developers>
 
     <licenses>
         <license>
@@ -23,13 +25,24 @@
         </license>
     </licenses>
 
-    <developers>
-        <developer>
-            <name>Ivan Antes-Klobucar</name>
-            <email>ivan.antesklobucar@gmail.com</email>
-            <organizationUrl>http://github.com/go-ive</organizationUrl>
-        </developer>
-    </developers>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <scm>
+        <connection>scm:git:git@github.com/go-ive/steam-api.git</connection>
+        <developerConnection>scm:git:github.com/go-ive/steam-api.git</developerConnection>
+        <url>git@github.com:go-ive/steam-api.git</url>
+    </scm>
+
+    <properties>
+        <surefire.version>2.18.1</surefire.version>
+        <e2e.test.pattern>e2e/**/*Test.java</e2e.test.pattern>
+        <unit.test.pattern>com/github/goive/steamapi/**/*Test.java</unit.test.pattern>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -76,15 +89,18 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>${e2e.test.pattern}</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <profiles>
         <profile>
@@ -186,6 +202,29 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>e2e</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${surefire.version}</version>
+                        <configuration>
+                            <includes>
+                                <include>${e2e.test.pattern}</include>
+                            </includes>
+                            <excludes>
+                                <exclude>${unit.test.pattern}</exclude>
+                            </excludes>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
