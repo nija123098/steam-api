@@ -1,6 +1,6 @@
 package com.github.goive.steamapi;
 
-import com.github.goive.steamapi.client.SteamApiClient;
+import e2e.client.SteamApiClient;
 import com.github.goive.steamapi.data.SteamApp;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;
@@ -39,7 +39,7 @@ public class SteamApiTest {
     public void shouldRetrieveDataForOneId() {
         Mockito.when(steamApiClient.retrieveResultBodyMap(70L)).thenReturn(halfLifeResultMap);
 
-        SteamApp halfLife = steamApiImpl.retrieveData(70L);
+        SteamApp halfLife = steamApiImpl.retrieveApp(70L);
 
         Assert.assertEquals("Name not correct", "Half-Life", halfLife.getName());
     }

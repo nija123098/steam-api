@@ -1,5 +1,6 @@
-package com.github.goive.steamapi.client;
+package e2e;
 
+import e2e.client.AppIdChecker;
 import org.junit.Assert;
 import org.junit.Test;
 

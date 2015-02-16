@@ -6,18 +6,39 @@ import com.github.goive.steamapi.data.SteamApp;
 import com.github.goive.steamapi.data.SteamAppSingleBuilder;
 import com.github.goive.steamapi.enums.Type;
 import com.github.goive.steamapi.exceptions.InvalidAppIdException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Currency;
 import java.util.Date;
+import java.util.Map;
 
-public class SteamAppSingleBuilderTest extends AbstractSteamAppBuilderTest {
+public class SteamAppSingleBuilderTest {
+
+    private static final long HALF_LIFE_APP_ID = 70L;
+    private Map<Object, Object> halfLifeResultMap;
+    private Map<Object, Object> halfLifeResultMapWithTwoFieldReleaseDate;
+    private Map<Object, Object> freeToPlayResultMap;
+    private Map<Object, Object> oneDigitReleaseDayResultMap;
 
     private SteamAppSingleBuilder builder = new SteamAppSingleBuilder();
+
+    @Before
+    public void setup() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        halfLifeResultMap = objectMapper.readValue(new File("src/test/resources/app_id_70.json"), Map.class);
+        halfLifeResultMapWithTwoFieldReleaseDate = objectMapper.readValue(new File("src/test/resources/app_id_70_2_field_release_date.json"), Map.class);
+        freeToPlayResultMap = objectMapper.readValue(new File("src/test/resources/f2p_game.json"), Map.class);
+        oneDigitReleaseDayResultMap = objectMapper.readValue(new File("src/test/resources/one_digit_release_day.json"), Map.class);
+    }
 
     @Test
     public void shouldCreateSteamApp() throws InvalidAppIdException {
@@ -27,7 +48,7 @@ public class SteamAppSingleBuilderTest extends AbstractSteamAppBuilderTest {
     }
 
     @Test
-    public void shouldContaintCorrectPriceData() throws InvalidAppIdException {
+    public void shouldContainCorrectPriceData() throws InvalidAppIdException {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
         Price price = steamApp.getPrice();
 
@@ -38,7 +59,7 @@ public class SteamAppSingleBuilderTest extends AbstractSteamAppBuilderTest {
     }
 
     @Test
-    public void shouldContaintCorrectSupportedLanguages() throws InvalidAppIdException {
+    public void shouldContainCorrectSupportedLanguages() throws InvalidAppIdException {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertEquals("SupportedLanguages size not correct", 8, steamApp.getSupportedLanguages().size());
@@ -47,19 +68,16 @@ public class SteamAppSingleBuilderTest extends AbstractSteamAppBuilderTest {
     }
 
     @Test
-    public void shouldContaintCorrectGenericData() throws InvalidAppIdException {
+    public void shouldContainCorrectGenericData() throws InvalidAppIdException {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertEquals("AppId not correct", HALF_LIFE_APP_ID, steamApp.getAppId());
         Assert.assertEquals("Type not correct", Type.GAME, steamApp.getType());
         Assert.assertEquals("Name not correct", "Half-Life", steamApp.getName());
         Assert.assertEquals("RequiredAge not correct", 10, steamApp.getRequiredAge());
-        Assert.assertTrue("DetailedDescription not correct",
-            steamApp.getDetailedDescription().contains("Named Game of the Year by over 50"));
-        Assert.assertTrue("AboutTheGame not correct",
-            steamApp.getAboutTheGame().contains("Valve's debut title blends action and adventure"));
-        Assert.assertEquals("HeaderImage not correct",
-            "http://cdn.akamai.steamstatic.com/steam/apps/70/header.jpg?t=1360355165", steamApp.getHeaderImage());
+        Assert.assertTrue("DetailedDescription not correct", steamApp.getDetailedDescription().contains("Named Game of the Year by over 50"));
+        Assert.assertTrue("AboutTheGame not correct", steamApp.getAboutTheGame().contains("Valve's debut title blends action and adventure"));
+        Assert.assertEquals("HeaderImage not correct", "http://cdn.akamai.steamstatic.com/steam/apps/70/header.jpg?t=1360355165", steamApp.getHeaderImage());
         Assert.assertEquals("Website not correct", "http://www.half-life.com/", steamApp.getWebsite());
     }
 
@@ -132,8 +150,7 @@ public class SteamAppSingleBuilderTest extends AbstractSteamAppBuilderTest {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertEquals("Metacritic score not correct", Integer.valueOf(96), steamApp.getMetacriticScore());
-        Assert.assertEquals("Metacritic url not correct", "http://www.metacritic.com/game/pc/half-life",
-            steamApp.getMetacriticUrl());
+        Assert.assertEquals("Metacritic url not correct", "http://www.metacritic.com/game/pc/half-life", steamApp.getMetacriticUrl());
     }
 
     @Test
@@ -143,4 +160,5 @@ public class SteamAppSingleBuilderTest extends AbstractSteamAppBuilderTest {
         Assert.assertNotNull(steamApp.getSupportInfo());
         Assert.assertEquals("URL not correct", "http://www.google.com", steamApp.getSupportInfo().getUrl().toString());
     }
+
 }
