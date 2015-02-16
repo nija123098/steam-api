@@ -26,7 +26,7 @@ public class AppIdChecker {
             URL src = new URL("http://api.steampowered.com/ISteamApps/GetAppList/v0001/");
             resultMap = mapper.readValue(src, Map.class);
         } catch (IOException e) {
-            throw new SteamApiException(e);
+            throw new SteamApiException("Error fetching list of valid AppIDs.", e);
         }
 
         return resultMap;

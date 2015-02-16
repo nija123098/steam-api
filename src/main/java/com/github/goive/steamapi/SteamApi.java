@@ -19,20 +19,6 @@ public interface SteamApi {
      * @return {@link SteamApp} object containing information about the given appId.
      * @throws SteamApiException if the retrieving went wrong or the appId is invalid.
      */
-    SteamApp retrieveData(long appId) throws SteamApiException;
-
-    /**
-     * Sets the country code to use for the API call. This code determines the returned price and currency.
-     * 
-     * @param countryCode {@link CountryCode} for the call.
-     */
-    void setCountryCode(CountryCode countryCode);
-
-    /**
-     * Returns the currently set {@link CountryCode}. Calls to the API will return the currency based on this code.
-     * 
-     * @return country code
-     */
-    CountryCode getCountryCode();
+    SteamApp retrieveApp(long appId) throws SteamApiException;
 
 }

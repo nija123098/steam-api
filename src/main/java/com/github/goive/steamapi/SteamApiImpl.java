@@ -15,7 +15,11 @@ public class SteamApiImpl implements SteamApi {
 
     private SteamApiClient client = new SteamApiClientImpl();
 
-    public SteamApp retrieveData(long appId) throws SteamApiException {
+    SteamApiImpl() {
+
+    }
+
+    public SteamApp retrieveApp(long appId) throws SteamApiException {
         AppIdChecker appIdChecker = new AppIdChecker();
         if (appIdChecker.existsAppIdOnSteam(appId)) {
             Map<Object, Object> bodyMapForId = client.retrieveResultBodyMap(appId);
@@ -26,12 +30,10 @@ public class SteamApiImpl implements SteamApi {
         throw new InvalidAppIdException(appId + "");
     }
 
-    @Override
     public void setCountryCode(CountryCode countryCode) {
         client.setCountryCode(countryCode);
     }
 
-    @Override
     public CountryCode getCountryCode() {
         return client.getCountryCode();
     }
