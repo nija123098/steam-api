@@ -3,6 +3,7 @@ package e2e.client;
 import java.io.IOException;
 import java.util.Map;
 
+import com.github.goive.steamapi.client.SteamApiClientImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

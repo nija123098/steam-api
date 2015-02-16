@@ -1,6 +1,6 @@
 package e2e;
 
-import e2e.client.AppIdChecker;
+import com.github.goive.steamapi.client.AppIdChecker;
 import org.junit.Assert;
 import org.junit.Test;
 
