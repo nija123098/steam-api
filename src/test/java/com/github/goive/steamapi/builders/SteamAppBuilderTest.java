@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.goive.steamapi.data.Category;
 import com.github.goive.steamapi.data.Price;
 import com.github.goive.steamapi.data.SteamApp;
-import com.github.goive.steamapi.data.SteamAppSingleBuilder;
+import com.github.goive.steamapi.data.SteamAppBuilder;
 import com.github.goive.steamapi.enums.Type;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 import org.junit.Assert;
@@ -20,7 +20,7 @@ import java.util.Currency;
 import java.util.Date;
 import java.util.Map;
 
-public class SteamAppSingleBuilderTest {
+public class SteamAppBuilderTest {
 
     private static final long HALF_LIFE_APP_ID = 70L;
     private Map<Object, Object> halfLifeResultMap;
@@ -28,7 +28,7 @@ public class SteamAppSingleBuilderTest {
     private Map<Object, Object> freeToPlayResultMap;
     private Map<Object, Object> oneDigitReleaseDayResultMap;
 
-    private SteamAppSingleBuilder builder = new SteamAppSingleBuilder();
+    private SteamAppBuilder builder = new SteamAppBuilder();
 
     @Before
     public void setup() throws IOException {

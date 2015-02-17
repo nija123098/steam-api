@@ -3,7 +3,7 @@ package com.github.goive.steamapi;
 import com.github.goive.steamapi.client.ApiClient;
 import com.github.goive.steamapi.client.ApiClientImpl;
 import com.github.goive.steamapi.data.SteamApp;
-import com.github.goive.steamapi.data.SteamAppSingleBuilder;
+import com.github.goive.steamapi.data.SteamAppBuilder;
 import com.github.goive.steamapi.enums.CountryCode;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 
@@ -27,7 +27,7 @@ class SteamApiImpl implements SteamApi {
 
         if (validAppIds.contains(appId)) {
             Map<Object, Object> bodyMapForId = client.retrieveResultBodyMap(appId);
-            return new SteamAppSingleBuilder().withResultMap(bodyMapForId).build();
+            return new SteamAppBuilder().withResultMap(bodyMapForId).build();
         } else {
             throw new SteamApiException("Invalid appId given: " + appId, null);
         }
