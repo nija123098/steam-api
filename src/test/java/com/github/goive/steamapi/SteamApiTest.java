@@ -1,8 +1,8 @@
 package com.github.goive.steamapi;
 
-import com.github.goive.steamapi.client.SteamApiClient;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.goive.steamapi.client.ApiClient;
 import com.github.goive.steamapi.data.SteamApp;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,7 @@ public class SteamApiTest {
     private Map<Object, Object> halfLifeResultMap;
 
     @Mock
-    private SteamApiClient steamApiClient;
+    private ApiClient apiClient;
 
     @InjectMocks
     private SteamApiImpl steamApiImpl;
@@ -37,7 +37,7 @@ public class SteamApiTest {
 
     @Test
     public void shouldRetrieveDataForOneId() {
-        Mockito.when(steamApiClient.retrieveResultBodyMap(70L)).thenReturn(halfLifeResultMap);
+        Mockito.when(apiClient.retrieveResultBodyMap(70L)).thenReturn(halfLifeResultMap);
 
         SteamApp halfLife = steamApiImpl.retrieveApp(70L);
 

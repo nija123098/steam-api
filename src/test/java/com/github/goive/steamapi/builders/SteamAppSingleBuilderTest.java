@@ -1,12 +1,12 @@
 package com.github.goive.steamapi.builders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.goive.steamapi.data.Category;
 import com.github.goive.steamapi.data.Price;
 import com.github.goive.steamapi.data.SteamApp;
 import com.github.goive.steamapi.data.SteamAppSingleBuilder;
 import com.github.goive.steamapi.enums.Type;
-import com.github.goive.steamapi.exceptions.InvalidAppIdException;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.github.goive.steamapi.exceptions.SteamApiException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,14 +41,14 @@ public class SteamAppSingleBuilderTest {
     }
 
     @Test
-    public void shouldCreateSteamApp() throws InvalidAppIdException {
+    public void shouldCreateSteamApp() throws SteamApiException {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertNotNull(steamApp);
     }
 
     @Test
-    public void shouldContainCorrectPriceData() throws InvalidAppIdException {
+    public void shouldContainCorrectPriceData() throws SteamApiException {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
         Price price = steamApp.getPrice();
 
@@ -59,7 +59,7 @@ public class SteamAppSingleBuilderTest {
     }
 
     @Test
-    public void shouldContainCorrectSupportedLanguages() throws InvalidAppIdException {
+    public void shouldContainCorrectSupportedLanguages() throws SteamApiException {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertEquals("SupportedLanguages size not correct", 8, steamApp.getSupportedLanguages().size());
@@ -68,7 +68,7 @@ public class SteamAppSingleBuilderTest {
     }
 
     @Test
-    public void shouldContainCorrectGenericData() throws InvalidAppIdException {
+    public void shouldContainCorrectGenericData() throws SteamApiException {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertEquals("AppId not correct", HALF_LIFE_APP_ID, steamApp.getAppId());

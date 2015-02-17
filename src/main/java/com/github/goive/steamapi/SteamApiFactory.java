@@ -12,8 +12,8 @@ public class SteamApiFactory {
      *
      * @return {@link com.github.goive.steamapi.SteamApi} object to interact with the storefront api
      */
-    public static SteamApi getSteamApi() {
-        return getSteamApi(CountryCode.AT);
+    public static SteamApi createSteamApi() {
+        return createSteamApi(CountryCode.AT);
     }
 
     /**
@@ -21,7 +21,7 @@ public class SteamApiFactory {
      *
      * @return {@link com.github.goive.steamapi.SteamApi} object to interact with the storefront api
      */
-    public static SteamApi getSteamApi(CountryCode countryCode) {
+    public static SteamApi createSteamApi(CountryCode countryCode) {
         SteamApiImpl instance = new SteamApiImpl();
         instance.setCountryCode(countryCode);
         return instance;
