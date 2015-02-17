@@ -32,14 +32,12 @@ public class ApiClientRetrieveDataForAppIdTest extends AbstractApiClientTest {
 
     @Test(expected = SteamApiException.class)
     public void shouldFailToCallSteamApi() throws SteamApiException {
-        client = new ApiClientImpl();
         client.setApiUrl("invalidurl");
         client.retrieveResultBodyMap(HALF_LIFE_APP_ID);
     }
 
     @Test
     public void shouldRetrieveCorrectCurrencyForCountryCodeUS() {
-        client = new ApiClientImpl();
         client.setCountryCode(CountryCode.US);
 
         Map<Object, Object> resultBodyMap = client.retrieveResultBodyMap(10180L);
@@ -49,7 +47,6 @@ public class ApiClientRetrieveDataForAppIdTest extends AbstractApiClientTest {
 
     @Test
     public void shouldRetrieveCorrectCurrencyForCountryCodeRU() {
-        client = new ApiClientImpl();
         client.setCountryCode(CountryCode.RU);
 
         Map<Object, Object> resultBodyMap = client.retrieveResultBodyMap(10180L);
