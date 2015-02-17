@@ -10,7 +10,7 @@ import com.github.goive.steamapi.exceptions.SteamApiException;
 import java.util.Map;
 import java.util.Set;
 
-public class SteamApiImpl implements SteamApi {
+class SteamApiImpl implements SteamApi {
 
     private ApiClient client = new ApiClientImpl();
 
