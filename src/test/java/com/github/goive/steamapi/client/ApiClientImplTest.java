@@ -1,7 +1,5 @@
 package com.github.goive.steamapi.client;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 import org.junit.Test;
@@ -22,8 +20,7 @@ public class ApiClientImplTest {
     private ApiClientImpl client;
 
     private class ObjectMapperStub extends ObjectMapper {
-        public <T> T readValue(URL src, Class<T> valueType)
-                throws IOException, JsonParseException, JsonMappingException {
+        public <T> T readValue(URL src, Class<T> valueType) throws IOException {
             throw new IOException();
         }
     }

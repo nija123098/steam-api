@@ -10,7 +10,7 @@ import java.io.IOException;
  */
 public abstract class AbstractApiClientTest {
 
-    protected ApiClientImpl client;
+    ApiClientImpl client;
 
     @Before
     public void setup() throws IOException {

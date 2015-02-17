@@ -21,7 +21,7 @@ import com.github.goive.steamapi.enums.Type;
 
 public class SteamAppSingleBuilder {
 
-    private static Logger logger = Logger.getLogger(SteamAppSingleBuilder.class);
+    private static final Logger logger = Logger.getLogger(SteamAppSingleBuilder.class);
 
     private static final String MAC = "mac";
     private static final String LINUX = "linux";

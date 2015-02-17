@@ -241,6 +241,6 @@ public enum CountryCode {
     EH,
     YE,
     ZM,
-    ZW;
+    ZW
 
 }

@@ -41,7 +41,7 @@ class SteamApiImpl implements SteamApi {
         return client.getCountryCode();
     }
 
-    protected void setValidAppIds(Set<Long> validAppIds) {
+    void setValidAppIds(Set<Long> validAppIds) {
         this.validAppIds = validAppIds;
     }
 
