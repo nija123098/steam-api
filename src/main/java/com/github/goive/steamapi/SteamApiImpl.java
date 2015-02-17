@@ -8,26 +8,41 @@ import com.github.goive.steamapi.enums.CountryCode;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 
 import java.util.Map;
+import java.util.Set;
 
 public class SteamApiImpl implements SteamApi {
 
     private ApiClient client = new ApiClientImpl();
+
+    private Set<Long> validAppIds;
 
     SteamApiImpl() {
 
     }
 
     public SteamApp retrieveApp(long appId) throws SteamApiException {
-        Map<Object, Object> bodyMapForId = client.retrieveResultBodyMap(appId);
-        return new SteamAppSingleBuilder().withResultMap(bodyMapForId).build();
+        if (validAppIds == null || validAppIds.isEmpty()) {
+            validAppIds = client.retrieveValidAppIds();
+        }
+
+        if (validAppIds.contains(appId)) {
+            Map<Object, Object> bodyMapForId = client.retrieveResultBodyMap(appId);
+            return new SteamAppSingleBuilder().withResultMap(bodyMapForId).build();
+        } else {
+            throw new SteamApiException("Invalid appId given: " + appId, null);
+        }
     }
 
     public void setCountryCode(CountryCode countryCode) {
         client.setCountryCode(countryCode);
     }
-    
-    public CountryCode getCountryCode(){
+
+    public CountryCode getCountryCode() {
         return client.getCountryCode();
+    }
+
+    protected void setValidAppIds(Set<Long> validAppIds) {
+        this.validAppIds = validAppIds;
     }
 
 }
