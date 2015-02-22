@@ -92,7 +92,7 @@ public class SteamAppBuilder {
         Map<Object, Object> innerMap = (Map<Object, Object>) resultMap.get(appId + "");
 
         if (!(Boolean) innerMap.get("success")) {
-            throw new SteamApiException(appId + "", null);
+            throw new SteamApiException("Invalid appId: " + appId, null);
         }
 
         Map<Object, Object> dataMap = (Map<Object, Object>) innerMap.get(DATA);
@@ -196,7 +196,7 @@ public class SteamAppBuilder {
                 try {
                     releaseDate = sdf2.parse(dateString);
                 } catch (ParseException e) {
-                    logger.error("Could not parse release date for appId " + appId, e);
+                    logger.warn("Could not parse release date for appId " + appId, e);
                 }
 
                 break;
@@ -206,7 +206,7 @@ public class SteamAppBuilder {
                 try {
                     releaseDate = sdf3.parse(dateString);
                 } catch (ParseException e) {
-                    logger.error("Could not parse release date for appId " + appId, e);
+                    logger.warn("Could not parse release date for appId " + appId, e);
                 }
 
                 break;
