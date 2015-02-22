@@ -19,7 +19,7 @@ public interface ApiClient {
      *
      * @param appId Unique ID of the Steam application (visible in URL on Steam store page)
      * @return Map representation of the JSON object returned by the API
-     * @throws SteamApiException
+     * @throws SteamApiException in case of invalid appId
      */
     Map<Object, Object> retrieveResultBodyMap(long appId) throws SteamApiException;
 
@@ -27,7 +27,7 @@ public interface ApiClient {
      * Retrieves the list of valid appIds from Steam.
      *
      * @return Set of unique appIds that can be queried by this API.
-     * @throws {@link com.github.goive.steamapi.exceptions.SteamApiException}
+     * @throws SteamApiException in case of connection problems
      */
     Set<Long> retrieveValidAppIds() throws SteamApiException;
 

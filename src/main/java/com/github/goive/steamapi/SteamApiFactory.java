@@ -19,6 +19,7 @@ public class SteamApiFactory {
     /**
      * Creates an instance of the SteamApi that fetches data from the specified region.
      *
+     * @param countryCode the country code
      * @return {@link com.github.goive.steamapi.SteamApi} object to interact with the storefront api
      */
     public static SteamApi createSteamApi(CountryCode countryCode) {
