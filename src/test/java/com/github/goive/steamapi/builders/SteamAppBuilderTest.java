@@ -27,6 +27,7 @@ public class SteamAppBuilderTest {
     private Map<Object, Object> halfLifeResultMapWithTwoFieldReleaseDate;
     private Map<Object, Object> freeToPlayResultMap;
     private Map<Object, Object> oneDigitReleaseDayResultMap;
+    private Map<Object, Object> failResultMap;
 
     private SteamAppBuilder builder = new SteamAppBuilder();
 
@@ -38,6 +39,7 @@ public class SteamAppBuilderTest {
         halfLifeResultMapWithTwoFieldReleaseDate = objectMapper.readValue(new File("src/test/resources/app_id_70_2_field_release_date.json"), Map.class);
         freeToPlayResultMap = objectMapper.readValue(new File("src/test/resources/f2p_game.json"), Map.class);
         oneDigitReleaseDayResultMap = objectMapper.readValue(new File("src/test/resources/one_digit_release_day.json"), Map.class);
+        failResultMap = objectMapper.readValue(new File("src/test/resources/app_id_fail.json"), Map.class);
     }
 
     @Test
@@ -159,6 +161,11 @@ public class SteamAppBuilderTest {
 
         Assert.assertNotNull(steamApp.getSupportInfo());
         Assert.assertEquals("URL not correct", "http://www.google.com", steamApp.getSupportInfo().getUrl().toString());
+    }
+
+    @Test(expected = SteamApiException.class)
+    public void shouldThrowExceptionOnInvalidAppId() {
+        builder.withResultMap(failResultMap).build();
     }
 
 }
