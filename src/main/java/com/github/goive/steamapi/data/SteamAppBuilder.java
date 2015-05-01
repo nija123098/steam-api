@@ -102,7 +102,7 @@ public class SteamAppBuilder {
         parseMarketData(dataMap);
         parsePlatformData(dataMap);
         parseCategorieData(dataMap);
-        parseReleaseData(dataMap);
+        parseReleaseDate(dataMap);
         parseMetacriticData(dataMap);
         parseSupportInfo(dataMap);
     }
@@ -184,7 +184,7 @@ public class SteamAppBuilder {
     }
 
     @SuppressWarnings(UNCHECKED)
-    private void parseReleaseData(Map<Object, Object> dataMap) {
+    private void parseReleaseDate(Map<Object, Object> dataMap) {
         Map<Object, Object> releaseMap = (Map<Object, Object>) dataMap.get(RELEASE_DATE);
         String dateString = (String) releaseMap.get(DATE);
 
