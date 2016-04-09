@@ -1,14 +1,16 @@
 package com.github.goive.steamapi.client;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.*;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.log4j.Logger;
-
 import com.github.goive.steamapi.enums.CountryCode;
 import com.github.goive.steamapi.exceptions.SteamApiException;
+import org.apache.log4j.Logger;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The client that connects to the Steam API to retrieve data.
@@ -30,12 +32,24 @@ public class ApiClientImpl implements ApiClient {
 
     @Override
     public Map<Object, Object> retrieveResultBodyMap(long appId) throws SteamApiException {
+        Map resultBodyMap;
+
         try {
             URL src = new URL(apiUrl + appId + "&cc=" + countryCode.name());
-            return mapper.readValue(src, Map.class);
+            resultBodyMap = mapper.readValue(src, Map.class);
         } catch (IOException e) {
             throw new SteamApiException(e);
         }
+
+        if (!successfullyRetrieved(resultBodyMap, appId)) {
+            throw new SteamApiException("Invalid appId given: " + appId, null);
+        }
+
+        return resultBodyMap;
+    }
+
+    private boolean successfullyRetrieved(Map resultBodyMap, long appId) {
+        return (boolean) ((Map) resultBodyMap.get(String.valueOf(appId))).get("success");
     }
 
     @Override

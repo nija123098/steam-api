@@ -3,7 +3,6 @@ package com.github.goive.steamapi;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.goive.steamapi.client.ApiClient;
 import com.github.goive.steamapi.data.SteamApp;
-import com.github.goive.steamapi.exceptions.SteamApiException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,8 +16,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SteamApiImplTest {
@@ -53,27 +52,4 @@ public class SteamApiImplTest {
         assertEquals("Name not correct", "Half-Life", halfLife.getName());
     }
 
-    @Test
-    public void shouldRetrieveListOfValidAppIdsOnFirstCall() {
-        steamApiImpl.retrieveApp(123L);
-
-        verify(apiClient, times(1)).retrieveValidAppIds();
-    }
-
-    @Test
-    public void shouldNotRetrieveListOfValidAppIdsIfIdsInList() {
-        Set<Long> appIds = new HashSet<>();
-        appIds.add(123L);
-
-        steamApiImpl.setValidAppIds(appIds);
-
-        steamApiImpl.retrieveApp(123L);
-
-        verify(apiClient, never()).retrieveValidAppIds();
-    }
-
-    @Test(expected = SteamApiException.class)
-    public void shouldThrowExceptionOnInvalidAppId() {
-        steamApiImpl.retrieveApp(999999999L);
-    }
 }

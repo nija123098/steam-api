@@ -1,13 +1,11 @@
 package e2e.client;
 
-import java.util.Map;
-
-import com.github.goive.steamapi.client.ApiClientImpl;
+import com.github.goive.steamapi.enums.CountryCode;
+import com.github.goive.steamapi.exceptions.SteamApiException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.goive.steamapi.enums.CountryCode;
-import com.github.goive.steamapi.exceptions.SteamApiException;
+import java.util.Map;
 
 public class ApiClientRetrieveDataForAppIdTest extends AbstractApiClientTest {
 
@@ -22,12 +20,9 @@ public class ApiClientRetrieveDataForAppIdTest extends AbstractApiClientTest {
         Assert.assertTrue(resultBodyMap.containsKey(String.valueOf(HALF_LIFE_APP_ID)));
     }
 
-    @Test
+    @Test(expected = SteamApiException.class)
     public void shouldFailToRetrieveResultBodyMapFromSteamWithOneId() throws SteamApiException {
         Map<Object, Object> resultBodyMap = client.retrieveResultBodyMap(NOT_EXISTING_ID);
-
-        Assert.assertNotNull(resultBodyMap);
-        Assert.assertTrue(resultBodyMap.containsKey(String.valueOf(NOT_EXISTING_ID)));
     }
 
     @Test(expected = SteamApiException.class)
