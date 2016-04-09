@@ -35,13 +35,13 @@ This retrieves almost all available data for the given Steam ID including prices
 <dependency>
     <groupId>com.github.go-ive</groupId>
     <artifactId>steam-api</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
 </dependency>
 ```
 
 ### Direct Download
 
-Or download the JAR directly from [Maven Central](https://oss.sonatype.org/service/local/repositories/releases/content/com/github/go-ive/steam-api/3.0.0/steam-api-3.0.0.jar).
+Or download the JAR directly from [Maven Central](https://oss.sonatype.org/service/local/repositories/releases/content/com/github/go-ive/steam-api/3.0.1/steam-api-3.0.1.jar).
 
 ## Nightly Build
 
@@ -51,6 +51,6 @@ If you are interested in the version currently in the master branch, you can use
 <dependency>
     <groupId>com.github.go-ive</groupId>
     <artifactId>steam-api</artifactId>
-    <version>3.0.1-SNAPSHOT</version>
+    <version>3.0.2-SNAPSHOT</version>
 </dependency>
 ```
