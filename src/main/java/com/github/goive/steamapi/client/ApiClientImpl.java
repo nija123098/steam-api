@@ -8,10 +8,9 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The client that connects to the Steam API to retrieve data.
@@ -55,7 +54,7 @@ public class ApiClientImpl implements ApiClient {
     }
 
     @Override
-    public Set<Long> retrieveValidAppIds() throws SteamApiException {
+    public List<SteamId> retrieveAllAppIds() throws SteamApiException {
         Map<Object, Object> resultMap;
         try {
             URL src = new URL(APP_ID_LIST_URL);
@@ -64,22 +63,17 @@ public class ApiClientImpl implements ApiClient {
             throw new SteamApiException("Error fetching list of valid AppIDs.", e);
         }
 
-        Set<Long> validAppIds = extractAppIdsFromResult(resultMap);
-        logger.debug(validAppIds.size() + " appIds returned from API");
-
-        return validAppIds;
-    }
-
-    private Set<Long> extractAppIdsFromResult(Map<Object, Object> resultMap) {
         Map appMap = (Map) resultMap.get("applist");
         Map apps = (Map) appMap.get("apps");
         List appList = (List) apps.get("app");
-        Set<Long> validAppIds = new HashSet<>();
+
+        List<SteamId> result = new ArrayList<>();
         for (Object app : appList) {
             Map appItem = (Map) app;
-            validAppIds.add(Long.parseLong(appItem.get("appid").toString()));
+            result.add(SteamId.create(appItem.get("appid").toString(), appItem.get("name").toString()));
         }
-        return validAppIds;
+
+        return result;
     }
 
     public void setCountryCode(CountryCode countryCode) {

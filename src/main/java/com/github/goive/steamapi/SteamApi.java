@@ -5,6 +5,8 @@ import com.github.goive.steamapi.data.SteamId;
 import com.github.goive.steamapi.enums.CountryCode;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 
+import java.util.List;
+
 /**
  * Entry point for the APIs' external use.
  *
@@ -33,6 +35,18 @@ public interface SteamApi {
      */
     SteamApp retrieveApp(SteamId app) throws SteamApiException;
 
+    /**
+     * Retrieves a {@link List} of possible {@link SteamId}s.
+     *
+     * @return {@link List} of possible {@link SteamId}s
+     */
+    List<SteamId> retrievePossibleSteamIds();
+
+    /**
+     * Returns the currently set {@link CountryCode}.
+     *
+     * @return The currently set {@link CountryCode}
+     */
     CountryCode getCountryCode();
 
 }

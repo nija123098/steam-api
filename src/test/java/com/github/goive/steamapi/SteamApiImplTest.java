@@ -13,9 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -38,10 +36,10 @@ public class SteamApiImplTest {
 
         halfLifeResultMap = objectMapper.readValue(new File("src/test/resources/app_id_70.json"), Map.class);
 
-        Set<Long> appIds = new HashSet<>();
-        appIds.add(123L);
-        appIds.add(70L);
-        when(apiClient.retrieveValidAppIds()).thenReturn(appIds);
+        List<SteamId> appIds = new ArrayList<>();
+        appIds.add(SteamId.create(123L));
+        appIds.add(SteamId.create(70L));
+        when(apiClient.retrieveAllAppIds()).thenReturn(appIds);
     }
 
     @Test

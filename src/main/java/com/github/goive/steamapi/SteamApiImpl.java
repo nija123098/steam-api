@@ -8,6 +8,7 @@ import com.github.goive.steamapi.data.SteamId;
 import com.github.goive.steamapi.enums.CountryCode;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 
+import java.util.List;
 import java.util.Map;
 
 class SteamApiImpl implements SteamApi {
@@ -28,6 +29,11 @@ class SteamApiImpl implements SteamApi {
     public SteamApp retrieveApp(SteamId app) throws SteamApiException {
         Map<Object, Object> bodyMapForId = client.retrieveResultBodyMap(app);
         return new SteamAppBuilder().withResultMap(bodyMapForId).build();
+    }
+
+    @Override
+    public List<SteamId> retrievePossibleSteamIds() {
+        return client.retrieveAllAppIds();
     }
 
     public void setCountryCode(CountryCode countryCode) {

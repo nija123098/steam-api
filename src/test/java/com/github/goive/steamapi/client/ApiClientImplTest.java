@@ -30,7 +30,7 @@ public class ApiClientImplTest {
         ObjectMapperStub mapperStub = new ObjectMapperStub();
         client.setMapper(mapperStub);
 
-        client.retrieveValidAppIds();
+        client.retrieveAllAppIds();
     }
 
 }

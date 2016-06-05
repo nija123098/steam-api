@@ -1,11 +1,11 @@
 package com.github.goive.steamapi.client;
 
-import java.util.Map;
-import java.util.Set;
-
 import com.github.goive.steamapi.data.SteamId;
 import com.github.goive.steamapi.enums.CountryCode;
 import com.github.goive.steamapi.exceptions.SteamApiException;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Specifies a client implementation of the Steam store API.
@@ -24,15 +24,9 @@ public interface ApiClient {
      */
     Map<Object, Object> retrieveResultBodyMap(SteamId appId) throws SteamApiException;
 
-    /**
-     * Retrieves the list of valid appIds from Steam.
-     *
-     * @return Set of unique appIds that can be queried by this API.
-     * @throws SteamApiException in case of connection problems
-     */
-    Set<Long> retrieveValidAppIds() throws SteamApiException;
+    List<SteamId> retrieveAllAppIds() throws SteamApiException;
 
-    public void setCountryCode(CountryCode countryCode);
+    void setCountryCode(CountryCode countryCode);
 
     CountryCode getCountryCode();
 }
