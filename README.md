@@ -48,6 +48,12 @@ This retrieves almost all available data for the given Steam ID including prices
 
 ## Stable Release
 
+### Gradle
+
+```gradle
+compile 'com.github.go-ive:steam-api:4.0'
+```
+
 ### Maven
 
 ```xml
