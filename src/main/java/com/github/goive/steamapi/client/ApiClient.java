@@ -3,6 +3,7 @@ package com.github.goive.steamapi.client;
 import java.util.Map;
 import java.util.Set;
 
+import com.github.goive.steamapi.data.SteamId;
 import com.github.goive.steamapi.enums.CountryCode;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 
@@ -21,7 +22,7 @@ public interface ApiClient {
      * @return Map representation of the JSON object returned by the API
      * @throws SteamApiException in case of invalid appId
      */
-    Map<Object, Object> retrieveResultBodyMap(long appId) throws SteamApiException;
+    Map<Object, Object> retrieveResultBodyMap(SteamId appId) throws SteamApiException;
 
     /**
      * Retrieves the list of valid appIds from Steam.

@@ -1,6 +1,7 @@
 package com.github.goive.steamapi.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.goive.steamapi.data.SteamId;
 import com.github.goive.steamapi.enums.CountryCode;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 import org.apache.log4j.Logger;
@@ -31,7 +32,8 @@ public class ApiClientImpl implements ApiClient {
     }
 
     @Override
-    public Map<Object, Object> retrieveResultBodyMap(long appId) throws SteamApiException {
+    public Map<Object, Object> retrieveResultBodyMap(SteamId app) throws SteamApiException {
+        String appId = app.getAppId();
         Map resultBodyMap;
 
         try {
@@ -48,7 +50,7 @@ public class ApiClientImpl implements ApiClient {
         return resultBodyMap;
     }
 
-    private boolean successfullyRetrieved(Map resultBodyMap, long appId) {
+    private boolean successfullyRetrieved(Map resultBodyMap, String appId) {
         return (boolean) ((Map) resultBodyMap.get(String.valueOf(appId))).get("success");
     }
 

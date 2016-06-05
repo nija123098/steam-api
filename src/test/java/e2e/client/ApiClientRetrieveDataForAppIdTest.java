@@ -1,5 +1,6 @@
 package e2e.client;
 
+import com.github.goive.steamapi.data.SteamId;
 import com.github.goive.steamapi.enums.CountryCode;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 import org.junit.Assert;
@@ -9,20 +10,21 @@ import java.util.Map;
 
 public class ApiClientRetrieveDataForAppIdTest extends AbstractApiClientTest {
 
-    private static final long HALF_LIFE_APP_ID = 70L;
-    private static final long NOT_EXISTING_ID = 7099999999999L;
+    private static final SteamId HALF_LIFE_APP_ID = SteamId.create(70L);
+    private static final SteamId NOT_EXISTING_ID = SteamId.create(7099999999999L);
+    private static final SteamId CURRENCY_ID = SteamId.create(10180L);
 
     @Test
     public void shouldSuccessfullyRetrieveResultBodyMapFromSteamWithOneId() throws SteamApiException {
         Map<Object, Object> resultBodyMap = client.retrieveResultBodyMap(HALF_LIFE_APP_ID);
 
         Assert.assertNotNull(resultBodyMap);
-        Assert.assertTrue(resultBodyMap.containsKey(String.valueOf(HALF_LIFE_APP_ID)));
+        Assert.assertTrue(resultBodyMap.containsKey(String.valueOf(HALF_LIFE_APP_ID.getAppId())));
     }
 
     @Test(expected = SteamApiException.class)
     public void shouldFailToRetrieveResultBodyMapFromSteamWithOneId() throws SteamApiException {
-        Map<Object, Object> resultBodyMap = client.retrieveResultBodyMap(NOT_EXISTING_ID);
+        client.retrieveResultBodyMap(NOT_EXISTING_ID);
     }
 
     @Test(expected = SteamApiException.class)
@@ -35,7 +37,7 @@ public class ApiClientRetrieveDataForAppIdTest extends AbstractApiClientTest {
     public void shouldRetrieveCorrectCurrencyForCountryCodeUS() {
         client.setCountryCode(CountryCode.US);
 
-        Map<Object, Object> resultBodyMap = client.retrieveResultBodyMap(10180L);
+        Map<Object, Object> resultBodyMap = client.retrieveResultBodyMap(CURRENCY_ID);
 
         Assert.assertTrue(resultBodyMap.toString().contains("currency=USD"));
     }
@@ -44,7 +46,7 @@ public class ApiClientRetrieveDataForAppIdTest extends AbstractApiClientTest {
     public void shouldRetrieveCorrectCurrencyForCountryCodeRU() {
         client.setCountryCode(CountryCode.RU);
 
-        Map<Object, Object> resultBodyMap = client.retrieveResultBodyMap(10180L);
+        Map<Object, Object> resultBodyMap = client.retrieveResultBodyMap(CURRENCY_ID);
 
         Assert.assertTrue(resultBodyMap.toString().contains("currency=RUB"));
     }

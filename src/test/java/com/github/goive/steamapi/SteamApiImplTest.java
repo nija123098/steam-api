@@ -3,6 +3,7 @@ package com.github.goive.steamapi;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.goive.steamapi.client.ApiClient;
 import com.github.goive.steamapi.data.SteamApp;
+import com.github.goive.steamapi.data.SteamId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,7 +46,7 @@ public class SteamApiImplTest {
 
     @Test
     public void shouldRetrieveDataForOneId() {
-        when(apiClient.retrieveResultBodyMap(70L)).thenReturn(halfLifeResultMap);
+        when(apiClient.retrieveResultBodyMap(SteamId.create(70L))).thenReturn(halfLifeResultMap);
 
         SteamApp halfLife = steamApiImpl.retrieveApp(70L);
 
