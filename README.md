@@ -12,14 +12,33 @@ A Java library to retrieve data from Valves Steam platform. It uses the [Steam S
 ```java
 package com.github.goive.steamapidemo;
 
+import com.github.goive.steamapi.SteamApi;
+import com.github.goive.steamapi.SteamApiFactory;
+import com.github.goive.steamapi.data.Price;
 import com.github.goive.steamapi.data.SteamApp;
+import com.github.goive.steamapi.data.SteamId;
 import com.github.goive.steamapi.enums.CountryCode;
+
+import java.math.BigDecimal;
+import java.util.Currency;
 
 public class DemoApp {
 
     public static void main(String[] args) {
         SteamApi steamApi = SteamApiFactory.createSteamApi(CountryCode.AT);
-        SteamApp steamApp = steamApi.retrieveApp(70L); // appId of Half-Life
+
+        SteamId steamIdOfHalfLife = SteamId.create("70");
+
+        SteamApp steamApp = steamApi.retrieveApp(steamIdOfHalfLife);
+
+        Price price = steamApp.getPrice();
+
+        BigDecimal currentPriceOfApp = price.getFinalPrice();
+        BigDecimal priceBeforeDiscount = price.getInitialPrice();
+        int discountPercentage = price.getDiscountPercent();
+        Currency currency = price.getCurrency();
+
+        // other info also available in steamApp object...
     }
 
 }
@@ -35,13 +54,13 @@ This retrieves almost all available data for the given Steam ID including prices
 <dependency>
     <groupId>com.github.go-ive</groupId>
     <artifactId>steam-api</artifactId>
-    <version>3.0.1</version>
+    <version>4.0</version>
 </dependency>
 ```
 
 ### Direct Download
 
-Or download the JAR directly from [Maven Central](https://oss.sonatype.org/service/local/repositories/releases/content/com/github/go-ive/steam-api/3.0.1/steam-api-3.0.1.jar).
+Or download the JAR directly from [Maven Central](https://oss.sonatype.org/content/repositories/releases/com/github/go-ive/steam-api/4.0/steam-api-4.0.jar).
 
 ## Nightly Build
 
@@ -51,6 +70,6 @@ If you are interested in the version currently in the master branch, you can use
 <dependency>
     <groupId>com.github.go-ive</groupId>
     <artifactId>steam-api</artifactId>
-    <version>3.0.2-SNAPSHOT</version>
+    <version>4.1-SNAPSHOT</version>
 </dependency>
 ```
