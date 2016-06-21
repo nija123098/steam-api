@@ -81,6 +81,9 @@ If you are interested in the version currently in the master branch, you can use
 ```
 ## Change Log
 
+### 4.2
+* Merged pull request #11: Type "DLC" is now available in SteamApp.
+
 ### 4.1
 * Added method to retrieve all possible SteamIds
 
