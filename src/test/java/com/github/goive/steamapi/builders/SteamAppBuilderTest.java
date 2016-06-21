@@ -28,6 +28,7 @@ public class SteamAppBuilderTest {
     private Map<Object, Object> freeToPlayResultMap;
     private Map<Object, Object> oneDigitReleaseDayResultMap;
     private Map<Object, Object> failResultMap;
+    private Map<Object, Object> dlcResultMap;
 
     private SteamAppBuilder builder = new SteamAppBuilder();
 
@@ -40,6 +41,7 @@ public class SteamAppBuilderTest {
         freeToPlayResultMap = objectMapper.readValue(new File("src/test/resources/f2p_game.json"), Map.class);
         oneDigitReleaseDayResultMap = objectMapper.readValue(new File("src/test/resources/one_digit_release_day.json"), Map.class);
         failResultMap = objectMapper.readValue(new File("src/test/resources/app_id_fail.json"), Map.class);
+        dlcResultMap = objectMapper.readValue(new File("src/test/resources/app_type_dlc.json"), Map.class);
     }
 
     @Test
@@ -168,4 +170,10 @@ public class SteamAppBuilderTest {
         builder.withResultMap(failResultMap).build();
     }
 
+    @Test
+    public void shouldContainDclAppType() {
+        SteamApp steamApp = builder.withResultMap(dlcResultMap).build();
+
+        Assert.assertEquals(Type.DLC, steamApp.getType());
+    }
 }
