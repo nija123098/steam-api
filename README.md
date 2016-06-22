@@ -51,7 +51,7 @@ This retrieves almost all available data for the given Steam ID including prices
 ### Gradle
 
 ```gradle
-compile 'com.github.go-ive:steam-api:4.1'
+compile 'com.github.go-ive:steam-api:4.2'
 ```
 
 ### Maven
@@ -60,13 +60,13 @@ compile 'com.github.go-ive:steam-api:4.1'
 <dependency>
     <groupId>com.github.go-ive</groupId>
     <artifactId>steam-api</artifactId>
-    <version>4.1</version>
+    <version>4.2</version>
 </dependency>
 ```
 
 ### Direct Download
 
-Or download the JAR directly from [Maven Central](https://oss.sonatype.org/content/repositories/releases/com/github/go-ive/steam-api/4.1/steam-api-4.1.jar).
+Or download the JAR directly from [Maven Central](https://oss.sonatype.org/content/repositories/releases/com/github/go-ive/steam-api/4.2/steam-api-4.2.jar).
 
 ## Nightly Build
 
@@ -76,7 +76,7 @@ If you are interested in the version currently in the master branch, you can use
 <dependency>
     <groupId>com.github.go-ive</groupId>
     <artifactId>steam-api</artifactId>
-    <version>4.2-SNAPSHOT</version>
+    <version>4.3-SNAPSHOT</version>
 </dependency>
 ```
 ## Change Log
