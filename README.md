@@ -66,7 +66,7 @@ compile 'com.github.go-ive:steam-api:4.3'
 
 ### Direct Download
 
-Or download the JAR directly from [Maven Central](https://oss.sonatype.org/content/repositories/releases/com/github/go-ive/steam-api/3/steam-api-4.3.jar).
+Or download the JAR directly from [Maven Central](https://oss.sonatype.org/content/repositories/releases/com/github/go-ive/steam-api/4.3/steam-api-4.3.jar).
 
 ## Nightly Build
 
