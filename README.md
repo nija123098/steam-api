@@ -76,7 +76,7 @@ If you are interested in the version currently in the master branch, you can use
 <dependency>
     <groupId>com.github.go-ive</groupId>
     <artifactId>steam-api</artifactId>
-    <version>4.3-SNAPSHOT</version>
+    <version>4.4-SNAPSHOT</version>
 </dependency>
 ```
 ## Change Log
