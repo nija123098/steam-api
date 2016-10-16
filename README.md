@@ -51,7 +51,7 @@ This retrieves almost all available data for the given Steam ID including prices
 ### Gradle
 
 ```gradle
-compile 'com.github.go-ive:steam-api:4.2'
+compile 'com.github.go-ive:steam-api:4.3'
 ```
 
 ### Maven
@@ -60,13 +60,13 @@ compile 'com.github.go-ive:steam-api:4.2'
 <dependency>
     <groupId>com.github.go-ive</groupId>
     <artifactId>steam-api</artifactId>
-    <version>4.2</version>
+    <version>4.3</version>
 </dependency>
 ```
 
 ### Direct Download
 
-Or download the JAR directly from [Maven Central](https://oss.sonatype.org/content/repositories/releases/com/github/go-ive/steam-api/4.2/steam-api-4.2.jar).
+Or download the JAR directly from [Maven Central](https://oss.sonatype.org/content/repositories/releases/com/github/go-ive/steam-api/3/steam-api-4.3.jar).
 
 ## Nightly Build
 
@@ -80,6 +80,9 @@ If you are interested in the version currently in the master branch, you can use
 </dependency>
 ```
 ## Change Log
+
+### 4.3
+* Ensured compatibility with Java 7 for Android Projects. (Based on Issue #12)
 
 ### 4.2
 * Merged pull request #11: Type "DLC" is now available in SteamApp.

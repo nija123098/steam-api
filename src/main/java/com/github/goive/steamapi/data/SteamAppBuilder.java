@@ -1,23 +1,15 @@
 package com.github.goive.steamapi.data;
 
+import com.github.goive.steamapi.enums.Type;
+import com.github.goive.steamapi.exceptions.SteamApiException;
+import org.apache.log4j.Logger;
+
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Currency;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-
-import com.github.goive.steamapi.exceptions.SteamApiException;
-import org.apache.log4j.Logger;
-
-import com.github.goive.steamapi.enums.Type;
+import java.util.*;
 
 public class SteamAppBuilder {
 
@@ -173,14 +165,14 @@ public class SteamAppBuilder {
             return;
         }
 
-        categoriesMap.stream().forEach((categoryObject) -> {
+        for (Object categoryObject : categoriesMap) {
             Map<Object, Object> categoryItemMap = (Map<Object, Object>) categoryObject;
 
             String description = (String) categoryItemMap.get(DESCRIPTION);
             int id = Integer.parseInt(categoryItemMap.get(ID).toString());
 
             categories.add(new Category(id, description));
-        });
+        }
     }
 
     @SuppressWarnings(UNCHECKED)
