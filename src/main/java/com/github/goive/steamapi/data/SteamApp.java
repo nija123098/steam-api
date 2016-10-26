@@ -1,12 +1,13 @@
 package com.github.goive.steamapi.data;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Represents an application entry from the Steam database. Fields may be empty if there was no entry in the
@@ -161,6 +162,66 @@ public final class SteamApp implements Comparable<SteamApp> {
         return supportEmail;
     }
 
+    /**
+     * Convenient check for free to play game.
+     *
+     * @return true if game is free to play.
+     */
+    public boolean isFreeToPlay() {
+        if (price == null) {
+            return true;
+        }
+
+        return price.getFinalPrice().compareTo(BigDecimal.ZERO) == 0;
+    }
+
+    /**
+     * Convenient check if the game is discounted.
+     *
+     * @return true if discount percent is greater than 0; false if free to play
+     */
+    public boolean isDiscounted() {
+        return isDiscountedByAtLeast(1);
+    }
+
+    /**
+     * Convenient check if the game is discounted by at least the given percentage.
+     *
+     * @param percent Percentage of the discount
+     * @return true if discounted by given percentage or higher
+     */
+    public boolean isDiscountedByAtLeast(int percent) {
+        if (percent < 0 || percent > 100) {
+            throw new IllegalArgumentException("Percentage must be between 0 and 100");
+        }
+
+        if (price == null) {
+            return false;
+        }
+
+        return price.getDiscountPercent() >= percent;
+    }
+
+    /**
+     * Convenient check if the app is in any of the given categories.
+     *
+     * @param categories Categories to be checked
+     * @return true if app has any of the given categories
+     */
+    public boolean isInAnyCategory(String... categories) {
+        if (this.categories == null) {
+            return false;
+        }
+
+        for (String category : categories) {
+            if (this.categories.contains(category)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public int hashCode() {
         return new HashCodeBuilder() //
@@ -214,15 +275,6 @@ public final class SteamApp implements Comparable<SteamApp> {
     @Override
     public int compareTo(SteamApp other) {
         return (int) (this.appId - other.appId);
-    }
-
-    /**
-     * Convenient check for free to play game.
-     *
-     * @return true if game is free to play.
-     */
-    public boolean isFreeToPlay() {
-        return price == null;
     }
 
 }
