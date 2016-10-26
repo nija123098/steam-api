@@ -1,7 +1,6 @@
 package e2e.client;
 
 import com.github.goive.steamapi.data.SteamId;
-import com.github.goive.steamapi.enums.CountryCode;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -35,7 +34,7 @@ public class ApiClientRetrieveDataForAppIdTest extends AbstractApiClientTest {
 
     @Test
     public void shouldRetrieveCorrectCurrencyForCountryCodeUS() {
-        client.setCountryCode(CountryCode.US);
+        client.setCountryCode("US");
 
         Map<Object, Object> resultBodyMap = client.retrieveResultBodyMap(CURRENCY_ID);
 
@@ -44,7 +43,7 @@ public class ApiClientRetrieveDataForAppIdTest extends AbstractApiClientTest {
 
     @Test
     public void shouldRetrieveCorrectCurrencyForCountryCodeRU() {
-        client.setCountryCode(CountryCode.RU);
+        client.setCountryCode("RU");
 
         Map<Object, Object> resultBodyMap = client.retrieveResultBodyMap(CURRENCY_ID);
 

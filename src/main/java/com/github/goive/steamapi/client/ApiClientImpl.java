@@ -2,14 +2,13 @@ package com.github.goive.steamapi.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.goive.steamapi.data.SteamId;
-import com.github.goive.steamapi.enums.CountryCode;
 import com.github.goive.steamapi.exceptions.SteamApiException;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -19,15 +18,14 @@ import java.util.Map;
  */
 public class ApiClientImpl implements ApiClient {
 
-    private static final Logger logger = Logger.getLogger(ApiClientImpl.class);
     private static final String APP_ID_LIST_URL = "http://api.steampowered.com/ISteamApps/GetAppList/v0001/";
 
     private String apiUrl = "http://store.steampowered.com/api/appdetails?appids=";
     private ObjectMapper mapper = new ObjectMapper();
-    private CountryCode countryCode;
+    private String countryCode;
 
     public ApiClientImpl() {
-        countryCode = CountryCode.AT;
+        countryCode = Locale.getDefault().getCountry();
     }
 
     @Override
@@ -36,7 +34,7 @@ public class ApiClientImpl implements ApiClient {
         Map resultBodyMap;
 
         try {
-            URL src = new URL(apiUrl + appId + "&cc=" + countryCode.name());
+            URL src = new URL(apiUrl + appId + "&cc=" + countryCode);
             resultBodyMap = mapper.readValue(src, Map.class);
         } catch (IOException e) {
             throw new SteamApiException(e);
@@ -76,12 +74,12 @@ public class ApiClientImpl implements ApiClient {
         return result;
     }
 
-    public void setCountryCode(CountryCode countryCode) {
+    public void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
     }
 
     @Override
-    public CountryCode getCountryCode() {
+    public String getCountryCode() {
         return countryCode;
     }
 

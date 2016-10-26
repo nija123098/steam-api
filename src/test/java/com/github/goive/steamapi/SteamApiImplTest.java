@@ -13,7 +13,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -27,7 +29,7 @@ public class SteamApiImplTest {
     private ApiClient apiClient;
 
     @InjectMocks
-    private SteamApiImpl steamApiImpl;
+    private SteamApi steamApiImpl;
 
     @SuppressWarnings("unchecked")
     @Before
@@ -46,7 +48,7 @@ public class SteamApiImplTest {
     public void shouldRetrieveDataForOneId() {
         when(apiClient.retrieveResultBodyMap(SteamId.create(70L))).thenReturn(halfLifeResultMap);
 
-        SteamApp halfLife = steamApiImpl.retrieveApp(70L);
+        SteamApp halfLife = steamApiImpl.retrieveApp(SteamId.create(70L));
 
         assertEquals("Name not correct", "Half-Life", halfLife.getName());
     }
