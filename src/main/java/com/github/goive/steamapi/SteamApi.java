@@ -3,7 +3,6 @@ package com.github.goive.steamapi;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.goive.steamapi.data.SteamApp;
 import com.github.goive.steamapi.data.SteamAppBuilder;
-import com.github.goive.steamapi.data.SteamId;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 import org.apache.commons.lang3.StringUtils;
 
@@ -31,8 +30,7 @@ public class SteamApi {
         setCountryCode(countryCode);
     }
 
-    public SteamApp retrieve(SteamId app) throws SteamApiException {
-        String appId = app.getAppId();
+    public SteamApp retrieve(String appId) throws SteamApiException {
         Map resultBodyMap;
 
         try {
@@ -54,7 +52,7 @@ public class SteamApi {
         return (boolean) ((Map) resultBodyMap.get(String.valueOf(appId))).get("success");
     }
 
-    public List<SteamId> listIds() throws SteamApiException {
+    public List<String> listIds() throws SteamApiException {
         Map<Object, Object> resultMap;
         try {
             URL src = new URL(APP_ID_LIST_URL);
@@ -67,10 +65,10 @@ public class SteamApi {
         Map apps = (Map) appMap.get("apps");
         List appList = (List) apps.get("app");
 
-        List<SteamId> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         for (Object app : appList) {
             Map appItem = (Map) app;
-            result.add(SteamId.create(appItem.get("appid").toString(), appItem.get("name").toString()));
+            result.add(appItem.get("appid").toString());
         }
 
         return result;

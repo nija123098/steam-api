@@ -12,7 +12,6 @@ A Java library to retrieve data from Valve's Steam platform. It uses the [Steam 
 ```java
 import com.github.goive.steamapi.SteamApi;
 import com.github.goive.steamapi.data.SteamApp;
-import com.github.goive.steamapi.data.SteamId;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 
 import java.math.BigDecimal;
@@ -27,10 +26,10 @@ public class DemoApp {
 
         try {
             // Retrieves a list of all possible steam Ids, in case you want to pre-check
-            List<SteamId> steamIds = steamApi.listIds();
+            List<String> steamIds = steamApi.listIds();
 
             // Fetches information about the steam game including pricing
-            SteamApp steamApp = steamApi.retrieve(SteamId.create("70"));
+            SteamApp steamApp = steamApi.retrieve("70");
 
             // Use the getters to retrieve data.
             Date releaseDate = steamApp.getReleaseDate();

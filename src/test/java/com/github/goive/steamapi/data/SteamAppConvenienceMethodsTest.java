@@ -25,7 +25,7 @@ public class SteamAppConvenienceMethodsTest {
 
     @Test
     public void notDiscountedGameShouldNotBeDiscounted() {
-        Price price = createPrice(0, 10, 10);
+        SteamApp.Price price = createPrice(0, 10, 10);
         steamApp = createSteamApp(price);
 
         assertFalse(steamApp.isDiscounted());
@@ -35,7 +35,7 @@ public class SteamAppConvenienceMethodsTest {
 
     @Test
     public void discountedGameShouldBeDiscounted() {
-        Price price = createPrice(50, 5, 10);
+        SteamApp.Price price = createPrice(50, 5, 10);
         steamApp = createSteamApp(price);
 
         assertFalse(steamApp.isFreeToPlay());
@@ -46,7 +46,7 @@ public class SteamAppConvenienceMethodsTest {
 
     @Test
     public void fullyDiscountedGameShouldBeF2P() {
-        Price price = createPrice(100, 0, 10);
+        SteamApp.Price price = createPrice(100, 0, 10);
         steamApp = createSteamApp(price);
 
         assertTrue(steamApp.isFreeToPlay());
@@ -78,15 +78,15 @@ public class SteamAppConvenienceMethodsTest {
         assertFalse(steamApp.isInAnyCategory());
     }
 
-    private Price createPrice(int discount, int finalPrice, int initialPrice) {
-        return new Price(Currency.getInstance("USD"),
+    private SteamApp.Price createPrice(int discount, int finalPrice, int initialPrice) {
+        return new SteamApp.Price(Currency.getInstance("USD"),
                 BigDecimal.valueOf(initialPrice),
                 BigDecimal.valueOf(finalPrice),
                 discount);
     }
 
-    private SteamApp createSteamApp(Price price) {
-        return new SteamApp(1L, "type", "name", 1, "desc", "about", Arrays.asList("l1", "l2"), "headerimage",
+    private SteamApp createSteamApp(SteamApp.Price price) {
+        return new SteamApp("1", "type", "name", 1, "desc", "about", Arrays.asList("l1", "l2"), "headerimage",
                 "website", price, Arrays.asList("dev1"), Arrays.asList("publisher1"), true, true, false,
                 Arrays.asList("c1", "c2"), new Date(), 75, "metaUrl", "supportUrl", "supportMail",
                 Arrays.asList("gen1"));

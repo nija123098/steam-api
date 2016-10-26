@@ -8,43 +8,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@SuppressWarnings("unchecked")
 public class SteamAppBuilder {
 
     private static final Logger logger = Logger.getLogger(SteamAppBuilder.class);
 
-    private static final String MAC = "mac";
-    private static final String LINUX = "linux";
-    private static final String WINDOWS = "windows";
-    private static final String PLATFORMS = "platforms";
-    private static final String PUBLISHERS = "publishers";
-    private static final String DEVELOPERS = "developers";
-    private static final String PRICE_OVERVIEW = "price_overview";
-    private static final String CURRENCY = "currency";
-    private static final String INITIAL = "initial";
-    private static final String FINAL = "final";
-    private static final String DISCOUNT_PERCENT = "discount_percent";
-    private static final String DATE = "date";
-    private static final String RELEASE_DATE = "release_date";
-    private static final String DESCRIPTION = "description";
-    private static final String CATEGORIES = "categories";
-    private static final String SCORE = "score";
-    private static final String METACRITIC = "metacritic";
-    private static final String EMAIL = "email";
-    private static final String URL = "url";
-    private static final String SUPPORT_INFO = "support_info";
-    private static final String WEBSITE = "website";
-    private static final String HEADER_IMAGE = "header_image";
-    private static final String SUPPORTED_LANGUAGES = "supported_languages";
-    private static final String ABOUT_THE_GAME = "about_the_game";
-    private static final String DETAILED_DESCRIPTION = "detailed_description";
-    private static final String REQUIRED_AGE = "required_age";
-    private static final String NAME = "name";
-    private static final String TYPE = "type";
-    private static final String DATA = "data";
-    private static final String GENRES = "genres";
-    private static final String UNCHECKED = "unchecked";
-
-    private long appId;
+    private String appId;
     private String type;
     private String name;
     private int requiredAge;
@@ -53,7 +22,7 @@ public class SteamAppBuilder {
     private List<String> supportedLanguages;
     private String headerImage;
     private String website;
-    private Price price;
+    private SteamApp.Price price;
     private List<String> developers;
     private List<String> publishers;
     private boolean availableForLinux;
@@ -70,7 +39,7 @@ public class SteamAppBuilder {
     public SteamAppBuilder withResultMap(Map<Object, Object> resultMap) throws SteamApiException {
         Set<Object> keySet = resultMap.keySet();
         for (Object key : keySet) {
-            appId = Long.parseLong((String) key);
+            appId = (String) key;
 
             fillFields(resultMap);
         }
@@ -78,19 +47,12 @@ public class SteamAppBuilder {
         return this;
     }
 
-    @SuppressWarnings("unchecked")
     private void fillFields(Map<Object, Object> resultMap) throws SteamApiException {
-        Map<Object, Object> innerMap = (Map<Object, Object>) resultMap.get(appId + "");
-
-        if (!(Boolean) innerMap.get("success")) {
-            throw new SteamApiException("Invalid appId: " + appId, null);
-        }
-
-        Map<Object, Object> dataMap = (Map<Object, Object>) innerMap.get(DATA);
+        Map<Object, Object> innerMap = (Map<Object, Object>) resultMap.get(appId);
+        Map<Object, Object> dataMap = (Map<Object, Object>) innerMap.get("data");
 
         parseGenericData(dataMap);
         parsePriceData(dataMap);
-        parseMarketData(dataMap);
         parsePlatformData(dataMap);
         parseCategoriesData(dataMap);
         parseReleaseDate(dataMap);
@@ -102,74 +64,67 @@ public class SteamAppBuilder {
     private void parseGenres(Map<Object, Object> dataMap) {
         genres = new ArrayList<>();
 
-        List<Object> genresMap = (List<Object>) dataMap.get(GENRES);
+        List<Object> genresMap = (List<Object>) dataMap.get("genres");
         if (genresMap != null) {
             for (Object genreObject : genresMap) {
                 Map<Object, Object> genreItemMap = (Map<Object, Object>) genreObject;
-                String description = (String) genreItemMap.get(DESCRIPTION);
+                String description = (String) genreItemMap.get("description");
                 genres.add(description);
             }
         }
     }
 
     private void parseGenericData(Map<Object, Object> dataMap) {
-        type = (String) dataMap.get(TYPE);
-        name = (String) dataMap.get(NAME);
+        type = (String) dataMap.get("type");
+        name = (String) dataMap.get("name");
 
         try {
-            requiredAge = (Integer) dataMap.get(REQUIRED_AGE);
+            requiredAge = (Integer) dataMap.get("required_age");
         } catch (ClassCastException e) {
             logger.debug("Could not parse required age for appId " + appId + " as integer. Trying string...", e);
-            requiredAge = Integer.valueOf((String) dataMap.get(REQUIRED_AGE));
+            requiredAge = Integer.valueOf((String) dataMap.get("required_age"));
         }
 
-        detailedDescription = (String) dataMap.get(DETAILED_DESCRIPTION);
-        aboutTheGame = (String) dataMap.get(ABOUT_THE_GAME);
+        detailedDescription = (String) dataMap.get("detailed_description");
+        aboutTheGame = (String) dataMap.get("about_the_game");
 
-        String supportedLanguagesRaw = (String) dataMap.get(SUPPORTED_LANGUAGES);
+        String supportedLanguagesRaw = (String) dataMap.get("supported_languages");
         if (supportedLanguagesRaw != null) {
             supportedLanguages = Arrays.asList(supportedLanguagesRaw.split("\\s*,\\s*"));
         }
 
-        headerImage = (String) dataMap.get(HEADER_IMAGE);
-        website = (String) dataMap.get(WEBSITE);
+        headerImage = (String) dataMap.get("header_image");
+        website = (String) dataMap.get("website");
+        developers = (List<String>) dataMap.get("developers");
+        publishers = (List<String>) dataMap.get("publishers");
     }
 
-    @SuppressWarnings(UNCHECKED)
     private void parsePriceData(Map<Object, Object> dataMap) {
-        Map<Object, Object> priceOverview = (Map<Object, Object>) dataMap.get(PRICE_OVERVIEW);
+        Map<Object, Object> priceOverview = (Map<Object, Object>) dataMap.get("price_overview");
 
         if (priceOverview == null) {
             logger.info("No price data found. Assuming " + name + " is free to play.");
             return;
         }
 
-        price = new Price(Currency.getInstance((String) priceOverview.get(CURRENCY)),
-                new BigDecimal(String.valueOf(priceOverview.get(INITIAL))).divide(new BigDecimal(100)),
-                new BigDecimal(String.valueOf(priceOverview.get(FINAL))).divide(new BigDecimal(100)),
-                (Integer) priceOverview.get(DISCOUNT_PERCENT));
+        price = new SteamApp.Price(Currency.getInstance((String) priceOverview.get("currency")),
+                new BigDecimal(String.valueOf(priceOverview.get("initial"))).divide(new BigDecimal(100), BigDecimal.ROUND_UP),
+                new BigDecimal(String.valueOf(priceOverview.get("final"))).divide(new BigDecimal(100), BigDecimal.ROUND_UP),
+                (Integer) priceOverview.get("discount_percent"));
     }
 
-    @SuppressWarnings(UNCHECKED)
-    private void parseMarketData(Map<Object, Object> dataMap) {
-        developers = (List<String>) dataMap.get(DEVELOPERS);
-        publishers = (List<String>) dataMap.get(PUBLISHERS);
-    }
-
-    @SuppressWarnings(UNCHECKED)
     private void parsePlatformData(Map<Object, Object> dataMap) {
-        Map<Object, Object> platformsMap = (Map<Object, Object>) dataMap.get(PLATFORMS);
+        Map<Object, Object> platformsMap = (Map<Object, Object>) dataMap.get("platforms");
 
-        availableForLinux = (Boolean) platformsMap.get(LINUX);
-        availableForMac = (Boolean) platformsMap.get(MAC);
-        availableForWindows = (Boolean) platformsMap.get(WINDOWS);
+        availableForLinux = (Boolean) platformsMap.get("linux");
+        availableForMac = (Boolean) platformsMap.get("mac");
+        availableForWindows = (Boolean) platformsMap.get("windows");
     }
 
-    @SuppressWarnings(UNCHECKED)
     private void parseCategoriesData(Map<Object, Object> dataMap) {
         categories = new ArrayList<>();
 
-        List<Object> categoriesMap = (List<Object>) dataMap.get(CATEGORIES);
+        List<Object> categoriesMap = (List<Object>) dataMap.get("categories");
         if (categoriesMap == null) {
             logger.info("No categories data found for " + appId + " - " + name);
             return;
@@ -178,16 +133,15 @@ public class SteamAppBuilder {
         for (Object categoryObject : categoriesMap) {
             Map<Object, Object> categoryItemMap = (Map<Object, Object>) categoryObject;
 
-            String description = (String) categoryItemMap.get(DESCRIPTION);
+            String description = (String) categoryItemMap.get("description");
 
             categories.add(description);
         }
     }
 
-    @SuppressWarnings(UNCHECKED)
     private void parseReleaseDate(Map<Object, Object> dataMap) {
-        Map<Object, Object> releaseMap = (Map<Object, Object>) dataMap.get(RELEASE_DATE);
-        String dateString = (String) releaseMap.get(DATE);
+        Map<Object, Object> releaseMap = (Map<Object, Object>) dataMap.get("release_date");
+        String dateString = (String) releaseMap.get("date");
 
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d MMM, yyyy", Locale.US);
@@ -197,25 +151,23 @@ public class SteamAppBuilder {
         }
     }
 
-    @SuppressWarnings(UNCHECKED)
     private void parseMetacriticData(Map<Object, Object> dataMap) {
-        Map<Object, Object> metacriticMap = (Map<Object, Object>) dataMap.get(METACRITIC);
+        Map<Object, Object> metacriticMap = (Map<Object, Object>) dataMap.get("metacritic");
 
         if (metacriticMap == null) {
             logger.info("No metacritic data found for " + appId + " - " + name);
             return;
         }
 
-        metacriticScore = (Integer) metacriticMap.get(SCORE);
-        metacriticUrl = (String) metacriticMap.get(URL);
+        metacriticScore = (Integer) metacriticMap.get("score");
+        metacriticUrl = (String) metacriticMap.get("url");
     }
 
-    @SuppressWarnings(UNCHECKED)
     private void parseSupportInfo(Map<Object, Object> dataMap) {
-        Map<Object, Object> supportInfoMap = (Map<Object, Object>) dataMap.get(SUPPORT_INFO);
+        Map<Object, Object> supportInfoMap = (Map<Object, Object>) dataMap.get("support_info");
 
-        supportUrl = (String) supportInfoMap.get(URL);
-        supportEmail = (String) supportInfoMap.get(EMAIL);
+        supportUrl = (String) supportInfoMap.get("url");
+        supportEmail = (String) supportInfoMap.get("email");
     }
 
     public SteamApp build() {

@@ -1,7 +1,6 @@
 package com.github.goive.steamapi;
 
 import com.github.goive.steamapi.data.SteamApp;
-import com.github.goive.steamapi.data.SteamId;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,9 +13,9 @@ import static org.junit.Assert.*;
 
 public class SteamApiCompatibilityTest {
 
-    private static final SteamId HALF_LIFE_APP_ID = SteamId.create(70L);
-    private static final SteamId NOT_EXISTING_ID = SteamId.create(7099999999999L);
-    private static final SteamId CURRENCY_ID = SteamId.create(10180L);
+    private static final String HALF_LIFE_APP_ID = "70";
+    private static final String NOT_EXISTING_ID = "7099999999999";
+    private static final String CURRENCY_ID = "10180";
 
     private SteamApi steamApi;
 
@@ -91,7 +90,7 @@ public class SteamApiCompatibilityTest {
 
     @Test
     public void shouldSuccessfullyRetrieveValidAppIds() throws SteamApiException {
-        List<SteamId> appIds = steamApi.listIds();
+        List<String> appIds = steamApi.listIds();
 
         // 15721 AppIds as of 17.02.2015
         Assert.assertTrue(appIds.size() > 15000);

@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public final class SteamApp implements Comparable<SteamApp> {
 
-    private final long appId;
+    private final String appId;
     private final String type;
     private final String name;
     private final int requiredAge;
@@ -41,7 +42,7 @@ public final class SteamApp implements Comparable<SteamApp> {
     private final String supportEmail;
     private final List<String> genres;
 
-    SteamApp(long appId, String type, String name, int requiredAge, String detailedDescription, String aboutTheGame,
+    SteamApp(String appId, String type, String name, int requiredAge, String detailedDescription, String aboutTheGame,
              List<String> supportedLanguages, String headerImage, String website, Price price, List<String> developers,
              List<String> publishers, boolean availableForLinux, boolean availableForWindows, boolean availableForMac,
              List<String> categories, Date releaseDate, Integer metacriticScore, String metacriticUrl,
@@ -70,7 +71,7 @@ public final class SteamApp implements Comparable<SteamApp> {
         this.genres = genres;
     }
 
-    public long getAppId() {
+    public String getAppId() {
         return appId;
     }
 
@@ -228,6 +229,38 @@ public final class SteamApp implements Comparable<SteamApp> {
         return false;
     }
 
+    public static class Price {
+
+        private Currency currency;
+        private BigDecimal initialPrice;
+        private BigDecimal finalPrice;
+        private int discountPercent;
+
+        Price(Currency currency, BigDecimal initialPrice, BigDecimal finalPrice, int discountPercent) {
+            this.currency = currency;
+            this.initialPrice = initialPrice;
+            this.finalPrice = finalPrice;
+            this.discountPercent = discountPercent;
+        }
+
+        public Currency getCurrency() {
+            return currency;
+        }
+
+        public BigDecimal getInitialPrice() {
+            return initialPrice;
+        }
+
+        public BigDecimal getFinalPrice() {
+            return finalPrice;
+        }
+
+        public int getDiscountPercent() {
+            return discountPercent;
+        }
+
+    }
+
     @Override
     public int hashCode() {
         return new HashCodeBuilder() //
@@ -281,7 +314,7 @@ public final class SteamApp implements Comparable<SteamApp> {
 
     @Override
     public int compareTo(SteamApp other) {
-        return (int) (this.appId - other.appId);
+        return Integer.parseInt(this.appId) - Integer.parseInt(other.appId);
     }
 
 }
