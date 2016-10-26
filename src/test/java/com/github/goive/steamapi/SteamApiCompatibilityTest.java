@@ -63,6 +63,7 @@ public class SteamApiCompatibilityTest {
                 halfLife.getReleaseDate());
         assertEquals("Support URL", "http://steamcommunity.com/app/70", halfLife.getSupportUrl());
         assertEquals("Support Email", "", halfLife.getSupportEmail());
+        assertEquals("Genres", Arrays.asList("Action"), halfLife.getGenres());
     }
 
     @Test(expected = SteamApiException.class)

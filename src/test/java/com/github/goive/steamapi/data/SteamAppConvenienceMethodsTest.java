@@ -88,7 +88,8 @@ public class SteamAppConvenienceMethodsTest {
     private SteamApp createSteamApp(Price price) {
         return new SteamApp(1L, "type", "name", 1, "desc", "about", Arrays.asList("l1", "l2"), "headerimage",
                 "website", price, Arrays.asList("dev1"), Arrays.asList("publisher1"), true, true, false,
-                Arrays.asList("c1", "c2"), new Date(), 75, "metaUrl", "supportUrl", "supportMail");
+                Arrays.asList("c1", "c2"), new Date(), 75, "metaUrl", "supportUrl", "supportMail",
+                Arrays.asList("gen1"));
     }
 
 

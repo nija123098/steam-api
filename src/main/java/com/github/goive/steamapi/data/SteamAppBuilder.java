@@ -41,6 +41,7 @@ public class SteamAppBuilder {
     private static final String NAME = "name";
     private static final String TYPE = "type";
     private static final String DATA = "data";
+    private static final String GENRES = "genres";
     private static final String UNCHECKED = "unchecked";
 
     private long appId;
@@ -64,6 +65,7 @@ public class SteamAppBuilder {
     private String metacriticUrl;
     private String supportUrl;
     private String supportEmail;
+    private List<String> genres;
 
     public SteamAppBuilder withResultMap(Map<Object, Object> resultMap) throws SteamApiException {
         Set<Object> keySet = resultMap.keySet();
@@ -94,6 +96,20 @@ public class SteamAppBuilder {
         parseReleaseDate(dataMap);
         parseMetacriticData(dataMap);
         parseSupportInfo(dataMap);
+        parseGenres(dataMap);
+    }
+
+    private void parseGenres(Map<Object, Object> dataMap) {
+        genres = new ArrayList<>();
+
+        List<Object> genresMap = (List<Object>) dataMap.get(GENRES);
+        if (genresMap != null) {
+            for (Object genreObject : genresMap) {
+                Map<Object, Object> genreItemMap = (Map<Object, Object>) genreObject;
+                String description = (String) genreItemMap.get(DESCRIPTION);
+                genres.add(description);
+            }
+        }
     }
 
     private void parseGenericData(Map<Object, Object> dataMap) {
@@ -205,6 +221,7 @@ public class SteamAppBuilder {
     public SteamApp build() {
         return new SteamApp(appId, type, name, requiredAge, detailedDescription, aboutTheGame, supportedLanguages,
                 headerImage, website, price, developers, publishers, availableForLinux, availableForWindows,
-                availableForMac, categories, releaseDate, metacriticScore, metacriticUrl, supportUrl, supportEmail);
+                availableForMac, categories, releaseDate, metacriticScore, metacriticUrl, supportUrl, supportEmail,
+                genres);
     }
 }

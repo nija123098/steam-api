@@ -39,12 +39,13 @@ public final class SteamApp implements Comparable<SteamApp> {
     private final String metacriticUrl;
     private final String supportUrl;
     private final String supportEmail;
+    private final List<String> genres;
 
     SteamApp(long appId, String type, String name, int requiredAge, String detailedDescription, String aboutTheGame,
              List<String> supportedLanguages, String headerImage, String website, Price price, List<String> developers,
              List<String> publishers, boolean availableForLinux, boolean availableForWindows, boolean availableForMac,
              List<String> categories, Date releaseDate, Integer metacriticScore, String metacriticUrl,
-             String supportUrl, String supportEmail) {
+             String supportUrl, String supportEmail, List<String> genres) {
         this.appId = appId;
         this.type = type;
         this.name = name;
@@ -66,6 +67,7 @@ public final class SteamApp implements Comparable<SteamApp> {
         this.metacriticUrl = metacriticUrl;
         this.supportUrl = supportUrl;
         this.supportEmail = supportEmail;
+        this.genres = genres;
     }
 
     public long getAppId() {
@@ -160,6 +162,10 @@ public final class SteamApp implements Comparable<SteamApp> {
 
     public String getSupportEmail() {
         return supportEmail;
+    }
+
+    public List<String> getGenres() {
+        return Collections.unmodifiableList(genres);
     }
 
     /**
@@ -269,6 +275,7 @@ public final class SteamApp implements Comparable<SteamApp> {
                 .append(metacriticUrl) //
                 .append(supportUrl) //
                 .append(supportEmail) //
+                .append(genres) //
                 .toString();
     }
 
