@@ -86,7 +86,7 @@ public class SteamAppBuilderTest {
     }
 
     @Test
-    public void shouldContainCorrectMarketInfo() {
+    public void shouldContainCorrectMarketInfo() throws SteamApiException {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertEquals("Not all developers are present", 1, steamApp.getDevelopers().size());
@@ -97,7 +97,7 @@ public class SteamAppBuilderTest {
     }
 
     @Test
-    public void shouldContainCorrectPlatformData() {
+    public void shouldContainCorrectPlatformData() throws SteamApiException {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertTrue("Linux availability", steamApp.isAvailableForLinux());
@@ -106,7 +106,7 @@ public class SteamAppBuilderTest {
     }
 
     @Test
-    public void shouldContainCorrectCategories() {
+    public void shouldContainCorrectCategories() throws SteamApiException {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertEquals("Incorrect amount of categories", 3, steamApp.getCategories().size());
@@ -116,7 +116,7 @@ public class SteamAppBuilderTest {
     }
 
     @Test
-    public void shouldContainReleaseDataWhenThreeFields() throws ParseException {
+    public void shouldContainReleaseDataWhenThreeFields() throws ParseException, SteamApiException {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -126,7 +126,7 @@ public class SteamAppBuilderTest {
     }
 
     @Test
-    public void shouldContainReleaseDataWhenTwoFields() throws ParseException {
+    public void shouldContainReleaseDataWhenTwoFields() throws ParseException, SteamApiException {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMapWithTwoFieldReleaseDate).build();
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
@@ -136,21 +136,21 @@ public class SteamAppBuilderTest {
     }
 
     @Test
-    public void shouldHandleFreeToPlayGame() {
+    public void shouldHandleFreeToPlayGame() throws SteamApiException {
         SteamApp steamApp = builder.withResultMap(freeToPlayResultMap).build();
 
         Assert.assertNull(steamApp.getPrice());
     }
 
     @Test
-    public void shouldHandleOneDigitReleaseDate() {
+    public void shouldHandleOneDigitReleaseDate() throws SteamApiException {
         SteamApp steamApp = builder.withResultMap(oneDigitReleaseDayResultMap).build();
 
         Assert.assertNotNull(steamApp.getReleaseDate());
     }
 
     @Test
-    public void shouldContainMetacriticData() {
+    public void shouldContainMetacriticData() throws SteamApiException {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertEquals("Metacritic score not correct", Integer.valueOf(96), steamApp.getMetacriticScore());
@@ -158,7 +158,7 @@ public class SteamAppBuilderTest {
     }
 
     @Test
-    public void shouldContainSupportInfo() {
+    public void shouldContainSupportInfo() throws SteamApiException {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertNotNull(steamApp.getSupportInfo());
@@ -166,12 +166,12 @@ public class SteamAppBuilderTest {
     }
 
     @Test(expected = SteamApiException.class)
-    public void shouldThrowExceptionOnInvalidAppId() {
+    public void shouldThrowExceptionOnInvalidAppId() throws SteamApiException {
         builder.withResultMap(failResultMap).build();
     }
 
     @Test
-    public void shouldContainDclAppType() {
+    public void shouldContainDclAppType() throws SteamApiException {
         SteamApp steamApp = builder.withResultMap(dlcResultMap).build();
 
         Assert.assertEquals(Type.DLC, steamApp.getType());

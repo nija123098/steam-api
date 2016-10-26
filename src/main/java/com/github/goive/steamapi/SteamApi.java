@@ -1,19 +1,26 @@
 package com.github.goive.steamapi;
 
-import com.github.goive.steamapi.client.ApiClient;
-import com.github.goive.steamapi.client.ApiClientImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.goive.steamapi.data.SteamApp;
 import com.github.goive.steamapi.data.SteamAppBuilder;
 import com.github.goive.steamapi.data.SteamId;
 import com.github.goive.steamapi.exceptions.SteamApiException;
+import org.apache.commons.lang3.StringUtils;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-class SteamApi {
+public class SteamApi {
 
-    private ApiClient client = new ApiClientImpl();
+    private static final String APP_ID_LIST_URL = "http://api.steampowered.com/ISteamApps/GetAppList/v0001/";
+    private static final String API_URL = "http://store.steampowered.com/api/appdetails?appids=";
+
+    private ObjectMapper mapper = new ObjectMapper();
+    private String countryCode;
 
     public SteamApi() {
         this(Locale.getDefault().getCountry());
@@ -23,21 +30,61 @@ class SteamApi {
         setCountryCode(countryCode);
     }
 
-    public SteamApp retrieveApp(SteamId app) throws SteamApiException {
-        Map<Object, Object> bodyMapForId = client.retrieveResultBodyMap(app);
-        return new SteamAppBuilder().withResultMap(bodyMapForId).build();
+    public SteamApp retrieve(SteamId app) throws SteamApiException {
+        String appId = app.getAppId();
+        Map resultBodyMap;
+
+        try {
+            URL src = new URL(API_URL + appId + "&cc=" + countryCode);
+            resultBodyMap = mapper.readValue(src, Map.class);
+        } catch (IOException e) {
+            throw new SteamApiException(e);
+        }
+
+        if (!successfullyRetrieved(resultBodyMap, appId)) {
+            throw new SteamApiException("Invalid appId given: " + appId);
+        }
+
+
+        return new SteamAppBuilder().withResultMap(resultBodyMap).build();
     }
 
-    public List<SteamId> retrievePossibleSteamIds() {
-        return client.retrieveAllAppIds();
+    private boolean successfullyRetrieved(Map resultBodyMap, String appId) {
+        return (boolean) ((Map) resultBodyMap.get(String.valueOf(appId))).get("success");
+    }
+
+    public List<SteamId> listIds() throws SteamApiException {
+        Map<Object, Object> resultMap;
+        try {
+            URL src = new URL(APP_ID_LIST_URL);
+            resultMap = mapper.readValue(src, Map.class);
+        } catch (IOException e) {
+            throw new SteamApiException("Error fetching list of valid AppIDs.", e);
+        }
+
+        Map appMap = (Map) resultMap.get("applist");
+        Map apps = (Map) appMap.get("apps");
+        List appList = (List) apps.get("app");
+
+        List<SteamId> result = new ArrayList<>();
+        for (Object app : appList) {
+            Map appItem = (Map) app;
+            result.add(SteamId.create(appItem.get("appid").toString(), appItem.get("name").toString()));
+        }
+
+        return result;
     }
 
     public void setCountryCode(String countryCode) {
-        client.setCountryCode(countryCode);
+        if (StringUtils.isBlank(countryCode)) {
+            throw new IllegalArgumentException("Country code cannot be empty.");
+        }
+
+        this.countryCode = countryCode;
     }
 
     public String getCountryCode() {
-        return client.getCountryCode();
+        return countryCode;
     }
 
 }

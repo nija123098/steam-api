@@ -68,7 +68,7 @@ public class SteamAppBuilder {
     private String metacriticUrl;
     private SupportInfo supportInfo;
 
-    public SteamAppBuilder withResultMap(Map<Object, Object> resultMap) {
+    public SteamAppBuilder withResultMap(Map<Object, Object> resultMap) throws SteamApiException {
         Set<Object> keySet = resultMap.keySet();
         for (Object key : keySet) {
             appId = Long.parseLong((String) key);
@@ -80,7 +80,7 @@ public class SteamAppBuilder {
     }
 
     @SuppressWarnings("unchecked")
-    private void fillFields(Map<Object, Object> resultMap) {
+    private void fillFields(Map<Object, Object> resultMap) throws SteamApiException {
         Map<Object, Object> innerMap = (Map<Object, Object>) resultMap.get(appId + "");
 
         if (!(Boolean) innerMap.get("success")) {

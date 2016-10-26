@@ -1,11 +1,12 @@
 package e2e.client;
 
+import com.github.goive.steamapi.data.SteamApp;
 import com.github.goive.steamapi.data.SteamId;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Map;
+import java.util.Currency;
 
 public class ApiClientRetrieveDataForAppIdTest extends AbstractApiClientTest {
 
@@ -15,39 +16,33 @@ public class ApiClientRetrieveDataForAppIdTest extends AbstractApiClientTest {
 
     @Test
     public void shouldSuccessfullyRetrieveResultBodyMapFromSteamWithOneId() throws SteamApiException {
-        Map<Object, Object> resultBodyMap = client.retrieveResultBodyMap(HALF_LIFE_APP_ID);
+        SteamApp halfLife = steamApi.retrieve(HALF_LIFE_APP_ID);
 
-        Assert.assertNotNull(resultBodyMap);
-        Assert.assertTrue(resultBodyMap.containsKey(String.valueOf(HALF_LIFE_APP_ID.getAppId())));
+        Assert.assertNotNull(halfLife);
+        Assert.assertEquals("Name", "Half-Life", halfLife.getName());
     }
 
     @Test(expected = SteamApiException.class)
     public void shouldFailToRetrieveResultBodyMapFromSteamWithOneId() throws SteamApiException {
-        client.retrieveResultBodyMap(NOT_EXISTING_ID);
-    }
-
-    @Test(expected = SteamApiException.class)
-    public void shouldFailToCallSteamApi() throws SteamApiException {
-        client.setApiUrl("invalidurl");
-        client.retrieveResultBodyMap(HALF_LIFE_APP_ID);
+        steamApi.retrieve(NOT_EXISTING_ID);
     }
 
     @Test
-    public void shouldRetrieveCorrectCurrencyForCountryCodeUS() {
-        client.setCountryCode("US");
+    public void shouldRetrieveCorrectCurrencyForCountryCodeUS() throws SteamApiException {
+        steamApi.setCountryCode("US");
 
-        Map<Object, Object> resultBodyMap = client.retrieveResultBodyMap(CURRENCY_ID);
+        SteamApp steamApp = steamApi.retrieve(CURRENCY_ID);
 
-        Assert.assertTrue(resultBodyMap.toString().contains("currency=USD"));
+        Assert.assertEquals(Currency.getInstance("USD"), steamApp.getPrice().getCurrency());
     }
 
     @Test
-    public void shouldRetrieveCorrectCurrencyForCountryCodeRU() {
-        client.setCountryCode("RU");
+    public void shouldRetrieveCorrectCurrencyForCountryCodeRU() throws SteamApiException {
+        steamApi.setCountryCode("RU");
 
-        Map<Object, Object> resultBodyMap = client.retrieveResultBodyMap(CURRENCY_ID);
+        SteamApp steamApp = steamApi.retrieve(CURRENCY_ID);
 
-        Assert.assertTrue(resultBodyMap.toString().contains("currency=RUB"));
+        Assert.assertEquals(Currency.getInstance("RUB"), steamApp.getPrice().getCurrency());
     }
 
 }
