@@ -1,11 +1,9 @@
 package com.github.goive.steamapi.builders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.goive.steamapi.data.Category;
 import com.github.goive.steamapi.data.Price;
 import com.github.goive.steamapi.data.SteamApp;
 import com.github.goive.steamapi.data.SteamAppBuilder;
-import com.github.goive.steamapi.enums.Type;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 import org.junit.Assert;
 import org.junit.Before;
@@ -76,7 +74,7 @@ public class SteamAppBuilderTest {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
         Assert.assertEquals("AppId not correct", HALF_LIFE_APP_ID, steamApp.getAppId());
-        Assert.assertEquals("Type not correct", Type.GAME, steamApp.getType());
+        Assert.assertEquals("Type not correct", "game", steamApp.getType());
         Assert.assertEquals("Name not correct", "Half-Life", steamApp.getName());
         Assert.assertEquals("RequiredAge not correct", 10, steamApp.getRequiredAge());
         Assert.assertTrue("DetailedDescription not correct", steamApp.getDetailedDescription().contains("Named Game of the Year by over 50"));
@@ -111,8 +109,7 @@ public class SteamAppBuilderTest {
 
         Assert.assertEquals("Incorrect amount of categories", 3, steamApp.getCategories().size());
 
-        Category singlePlayerCategory = new Category(2, "Single-player");
-        Assert.assertTrue("Wrong category", steamApp.getCategories().contains(singlePlayerCategory));
+        Assert.assertTrue("Wrong category", steamApp.getCategories().contains("Single-player"));
     }
 
     @Test
@@ -161,8 +158,7 @@ public class SteamAppBuilderTest {
     public void shouldContainSupportInfo() throws SteamApiException {
         SteamApp steamApp = builder.withResultMap(halfLifeResultMap).build();
 
-        Assert.assertNotNull(steamApp.getSupportInfo());
-        Assert.assertEquals("URL not correct", "http://www.google.com", steamApp.getSupportInfo().getUrl().toString());
+        Assert.assertEquals("URL not correct", "http://www.google.com", steamApp.getSupportUrl());
     }
 
     @Test(expected = SteamApiException.class)
@@ -174,6 +170,6 @@ public class SteamAppBuilderTest {
     public void shouldContainDclAppType() throws SteamApiException {
         SteamApp steamApp = builder.withResultMap(dlcResultMap).build();
 
-        Assert.assertEquals(Type.DLC, steamApp.getType());
+        Assert.assertEquals("dlc", steamApp.getType());
     }
 }

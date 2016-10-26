@@ -1,12 +1,9 @@
 package com.github.goive.steamapi.data;
 
-import com.github.goive.steamapi.enums.Type;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -28,7 +25,6 @@ public class SteamAppBuilder {
     private static final String DISCOUNT_PERCENT = "discount_percent";
     private static final String DATE = "date";
     private static final String RELEASE_DATE = "release_date";
-    private static final String ID = "id";
     private static final String DESCRIPTION = "description";
     private static final String CATEGORIES = "categories";
     private static final String SCORE = "score";
@@ -48,7 +44,7 @@ public class SteamAppBuilder {
     private static final String UNCHECKED = "unchecked";
 
     private long appId;
-    private Type type;
+    private String type;
     private String name;
     private int requiredAge;
     private String detailedDescription;
@@ -62,11 +58,12 @@ public class SteamAppBuilder {
     private boolean availableForLinux;
     private boolean availableForWindows;
     private boolean availableForMac;
-    private List<Category> categories;
+    private List<String> categories;
     private Date releaseDate;
     private Integer metacriticScore;
     private String metacriticUrl;
-    private SupportInfo supportInfo;
+    private String supportUrl;
+    private String supportEmail;
 
     public SteamAppBuilder withResultMap(Map<Object, Object> resultMap) throws SteamApiException {
         Set<Object> keySet = resultMap.keySet();
@@ -93,14 +90,14 @@ public class SteamAppBuilder {
         parsePriceData(dataMap);
         parseMarketData(dataMap);
         parsePlatformData(dataMap);
-        parseCategorieData(dataMap);
+        parseCategoriesData(dataMap);
         parseReleaseDate(dataMap);
         parseMetacriticData(dataMap);
         parseSupportInfo(dataMap);
     }
 
     private void parseGenericData(Map<Object, Object> dataMap) {
-        type = assignType((String) dataMap.get(TYPE));
+        type = (String) dataMap.get(TYPE);
         name = (String) dataMap.get(NAME);
 
         try {
@@ -156,7 +153,7 @@ public class SteamAppBuilder {
     }
 
     @SuppressWarnings(UNCHECKED)
-    private void parseCategorieData(Map<Object, Object> dataMap) {
+    private void parseCategoriesData(Map<Object, Object> dataMap) {
         categories = new ArrayList<>();
 
         List<Object> categoriesMap = (List<Object>) dataMap.get(CATEGORIES);
@@ -169,9 +166,8 @@ public class SteamAppBuilder {
             Map<Object, Object> categoryItemMap = (Map<Object, Object>) categoryObject;
 
             String description = (String) categoryItemMap.get(DESCRIPTION);
-            int id = Integer.parseInt(categoryItemMap.get(ID).toString());
 
-            categories.add(new Category(id, description));
+            categories.add(description);
         }
     }
 
@@ -223,33 +219,14 @@ public class SteamAppBuilder {
     @SuppressWarnings(UNCHECKED)
     private void parseSupportInfo(Map<Object, Object> dataMap) {
         Map<Object, Object> supportInfoMap = (Map<Object, Object>) dataMap.get(SUPPORT_INFO);
-        supportInfo = new SupportInfo();
 
-        String url = (String) supportInfoMap.get(URL);
-
-        try {
-            supportInfo.setUrl(new URL(url));
-        } catch (MalformedURLException e) {
-            logger.debug("Could not parse url " + url, e);
-        }
-
-        supportInfo.setEmail((String) supportInfoMap.get(EMAIL));
-    }
-
-    private Type assignType(String typeValue) {
-        for (Type type : Type.values()) {
-            if (type.getValue().equalsIgnoreCase(typeValue)) {
-                return type;
-            }
-        }
-
-        logger.warn("No type specified for " + typeValue);
-        return Type.UNDEFINED;
+        supportUrl = (String) supportInfoMap.get(URL);
+        supportEmail = (String) supportInfoMap.get(EMAIL);
     }
 
     public SteamApp build() {
         return new SteamApp(appId, type, name, requiredAge, detailedDescription, aboutTheGame, supportedLanguages,
                 headerImage, website, price, developers, publishers, availableForLinux, availableForWindows,
-                availableForMac, categories, releaseDate, metacriticScore, metacriticUrl, supportInfo);
+                availableForMac, categories, releaseDate, metacriticScore, metacriticUrl, supportUrl, supportEmail);
     }
 }

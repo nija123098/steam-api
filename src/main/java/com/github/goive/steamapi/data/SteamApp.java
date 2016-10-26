@@ -8,8 +8,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import com.github.goive.steamapi.enums.Type;
-
 /**
  * Represents an application entry from the Steam database. Fields may be empty if there was no entry in the
  * corresponding JSON object.
@@ -20,7 +18,7 @@ import com.github.goive.steamapi.enums.Type;
 public final class SteamApp implements Comparable<SteamApp> {
 
     private final long appId;
-    private final Type type;
+    private final String type;
     private final String name;
     private final int requiredAge;
     private final String detailedDescription;
@@ -34,17 +32,18 @@ public final class SteamApp implements Comparable<SteamApp> {
     private final boolean availableForLinux;
     private final boolean availableForWindows;
     private final boolean availableForMac;
-    private final List<Category> categories;
+    private final List<String> categories;
     private final Date releaseDate;
     private final Integer metacriticScore;
     private final String metacriticUrl;
-    private final SupportInfo supportInfo;
+    private final String supportUrl;
+    private final String supportEmail;
 
-    SteamApp(long appId, Type type, String name, int requiredAge, String detailedDescription, String aboutTheGame,
+    SteamApp(long appId, String type, String name, int requiredAge, String detailedDescription, String aboutTheGame,
              List<String> supportedLanguages, String headerImage, String website, Price price, List<String> developers,
              List<String> publishers, boolean availableForLinux, boolean availableForWindows, boolean availableForMac,
-             List<Category> categories, Date releaseDate, Integer metacriticScore, String metacriticUrl,
-             SupportInfo supportInfo) {
+             List<String> categories, Date releaseDate, Integer metacriticScore, String metacriticUrl,
+             String supportUrl, String supportEmail) {
         this.appId = appId;
         this.type = type;
         this.name = name;
@@ -64,19 +63,15 @@ public final class SteamApp implements Comparable<SteamApp> {
         this.releaseDate = releaseDate;
         this.metacriticScore = metacriticScore;
         this.metacriticUrl = metacriticUrl;
-        this.supportInfo = supportInfo;
+        this.supportUrl = supportUrl;
+        this.supportEmail = supportEmail;
     }
 
     public long getAppId() {
         return appId;
     }
 
-    /**
-     * Returns the application type as {@link com.github.goive.steamapi.enums.Type} enum. This is usually "game".
-     *
-     * @return {@link com.github.goive.steamapi.enums.Type} of the application
-     */
-    public Type getType() {
+    public String getType() {
         return type;
     }
 
@@ -152,19 +147,18 @@ public final class SteamApp implements Comparable<SteamApp> {
     /**
      * Returns a list of categories for the application.
      *
-     * @return A list of {@link Category} objects containing categories like "single player".
+     * @return A list of {@link String} objects containing categories like "single player".
      */
-    public List<Category> getCategories() {
+    public List<String> getCategories() {
         return Collections.unmodifiableList(categories);
     }
 
-    /**
-     * Returns support information for the applications like e-mail address and url.
-     *
-     * @return {@link SupportInfo} object containing data about the application.
-     */
-    public SupportInfo getSupportInfo() {
-        return supportInfo;
+    public String getSupportUrl() {
+        return supportUrl;
+    }
+
+    public String getSupportEmail() {
+        return supportEmail;
     }
 
     @Override
@@ -212,7 +206,8 @@ public final class SteamApp implements Comparable<SteamApp> {
                 .append(releaseDate) //
                 .append(metacriticScore) //
                 .append(metacriticUrl) //
-                .append(supportInfo) //
+                .append(supportUrl) //
+                .append(supportEmail) //
                 .toString();
     }
 

@@ -20,6 +20,7 @@ public class SteamApi {
     private static final String API_URL = "http://store.steampowered.com/api/appdetails?appids=";
 
     private ObjectMapper mapper = new ObjectMapper();
+
     private String countryCode;
 
     public SteamApi() {
