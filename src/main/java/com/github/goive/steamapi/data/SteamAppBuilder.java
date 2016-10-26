@@ -128,13 +128,10 @@ public class SteamAppBuilder {
             return;
         }
 
-        price = new Price();
-        price.setCurrency(Currency.getInstance((String) priceOverview.get(CURRENCY)));
-        price.setInitialPrice(new BigDecimal(String.valueOf(priceOverview.get(INITIAL)))
-                .divide(new BigDecimal(100)));
-        price.setFinalPrice(new BigDecimal(String.valueOf(priceOverview.get(FINAL)))
-                .divide(new BigDecimal(100)));
-        price.setDiscountPercent((Integer) priceOverview.get(DISCOUNT_PERCENT));
+        price = new Price(Currency.getInstance((String) priceOverview.get(CURRENCY)),
+                new BigDecimal(String.valueOf(priceOverview.get(INITIAL))).divide(new BigDecimal(100)),
+                new BigDecimal(String.valueOf(priceOverview.get(FINAL))).divide(new BigDecimal(100)),
+                (Integer) priceOverview.get(DISCOUNT_PERCENT));
     }
 
     @SuppressWarnings(UNCHECKED)

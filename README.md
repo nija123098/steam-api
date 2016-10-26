@@ -10,35 +10,44 @@ A Java library to retrieve data from Valve's Steam platform. It uses the [Steam 
 ## Usage
 
 ```java
-package com.github.goive.steamapidemo;
-
 import com.github.goive.steamapi.SteamApi;
-import com.github.goive.steamapi.SteamApiFactory;
-import com.github.goive.steamapi.data.Price;
 import com.github.goive.steamapi.data.SteamApp;
 import com.github.goive.steamapi.data.SteamId;
-import com.github.goive.steamapi.enums.CountryCode;
+import com.github.goive.steamapi.exceptions.SteamApiException;
 
 import java.math.BigDecimal;
-import java.util.Currency;
+import java.util.Date;
+import java.util.List;
 
 public class DemoApp {
 
     public static void main(String[] args) {
-        SteamApi steamApi = SteamApiFactory.createSteamApi(CountryCode.AT);
+        // Country codes are always 2 letter. Also possible to use the getCountry() method from Locale
+        SteamApi steamApi = new SteamApi("US");
 
-        SteamId steamIdOfHalfLife = SteamId.create("70");
+        try {
+            // Retrieves a list of all possible steam Ids, in case you want to pre-check
+            List<SteamId> steamIds = steamApi.listIds();
 
-        SteamApp steamApp = steamApi.retrieveApp(steamIdOfHalfLife);
+            // Fetches information about the steam game including pricing
+            SteamApp steamApp = steamApi.retrieve(SteamId.create("70"));
 
-        Price price = steamApp.getPrice();
+            // Use the getters to retrieve data.
+            Date releaseDate = steamApp.getReleaseDate();
+            List<String> supportedLanguages = steamApp.getSupportedLanguages();
+            String name = steamApp.getName();
+            BigDecimal finalPrice = steamApp.getPrice().getFinalPrice();
+            // ... and so on
 
-        BigDecimal currentPriceOfApp = price.getFinalPrice();
-        BigDecimal priceBeforeDiscount = price.getInitialPrice();
-        int discountPercentage = price.getDiscountPercent();
-        Currency currency = price.getCurrency();
-
-        // other info also available in steamApp object...
+            // Convenience methods
+            boolean freeToPlay = steamApp.isFreeToPlay();
+            boolean discounted = steamApp.isDiscounted();
+            boolean discountedByAtLeast20Percent = steamApp.isDiscountedByAtLeast(20);
+            boolean inAnyCategory = steamApp.isInAnyCategory("Single-player", "Multi-player");
+        } catch (SteamApiException e) {
+            // Exception needs to be thrown here in case of invalid appId or service downtime
+            e.printStackTrace();
+        }
     }
 
 }
@@ -46,12 +55,12 @@ public class DemoApp {
 
 This retrieves almost all available data for the given Steam ID including prices and discounts.
 
-## Stable Release
+## Releases
 
 ### Gradle
 
 ```gradle
-compile 'com.github.go-ive:steam-api:4.3'
+compile 'com.github.go-ive:steam-api:5.0'
 ```
 
 ### Maven
@@ -60,26 +69,18 @@ compile 'com.github.go-ive:steam-api:4.3'
 <dependency>
     <groupId>com.github.go-ive</groupId>
     <artifactId>steam-api</artifactId>
-    <version>4.3</version>
+    <version>5.0</version>
 </dependency>
 ```
 
 ### Direct Download
 
-Or download the JAR directly from [Maven Central](https://oss.sonatype.org/content/repositories/releases/com/github/go-ive/steam-api/4.3/steam-api-4.3.jar).
+Or download the JAR directly from [Maven Central](https://oss.sonatype.org/content/repositories/releases/com/github/go-ive/steam-api/5.0/steam-api-5.0.jar).
 
-## Nightly Build
-
-If you are interested in the version currently in the master branch, you can use the SNAPSHOT version. I do not recommend this for production use as this build is changing. 
-
-```xml
-<dependency>
-    <groupId>com.github.go-ive</groupId>
-    <artifactId>steam-api</artifactId>
-    <version>4.4-SNAPSHOT</version>
-</dependency>
-```
 ## Change Log
+
+### 5.0
+* Major API overhaul and slimming down of code.
 
 ### 4.3
 * Ensured compatibility with Java 7 for Android Projects. (Based on Issue #12)

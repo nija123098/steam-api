@@ -16,36 +16,27 @@ public class Price {
     private BigDecimal finalPrice;
     private int discountPercent;
 
-    public Currency getCurrency() {
-        return currency;
+    Price(Currency currency, BigDecimal initialPrice, BigDecimal finalPrice, int discountPercent) {
+        this.currency = currency;
+        this.initialPrice = initialPrice;
+        this.finalPrice = finalPrice;
+        this.discountPercent = discountPercent;
     }
 
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
+    public Currency getCurrency() {
+        return currency;
     }
 
     public BigDecimal getInitialPrice() {
         return initialPrice;
     }
 
-    public void setInitialPrice(BigDecimal initialPrice) {
-        this.initialPrice = initialPrice;
-    }
-
     public BigDecimal getFinalPrice() {
         return finalPrice;
     }
 
-    public void setFinalPrice(BigDecimal finalPrice) {
-        this.finalPrice = finalPrice;
-    }
-
     public int getDiscountPercent() {
         return discountPercent;
-    }
-
-    public void setDiscountPercent(int discountPercent) {
-        this.discountPercent = discountPercent;
     }
 
 }
