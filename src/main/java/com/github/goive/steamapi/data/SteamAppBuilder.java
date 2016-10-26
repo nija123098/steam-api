@@ -176,30 +176,11 @@ public class SteamAppBuilder {
         Map<Object, Object> releaseMap = (Map<Object, Object>) dataMap.get(RELEASE_DATE);
         String dateString = (String) releaseMap.get(DATE);
 
-        int numFields = dateString.split(" ").length;
-        switch (numFields) {
-            case 2:
-                SimpleDateFormat sdf2 = new SimpleDateFormat("MMM yyyy", Locale.US);
-
-                try {
-                    releaseDate = sdf2.parse(dateString);
-                } catch (ParseException e) {
-                    logger.warn("Could not parse release date for appId " + appId, e);
-                }
-
-                break;
-            case 3:
-                SimpleDateFormat sdf3 = new SimpleDateFormat("d MMM yyyy", Locale.US);
-
-                try {
-                    releaseDate = sdf3.parse(dateString);
-                } catch (ParseException e) {
-                    logger.warn("Could not parse release date for appId " + appId, e);
-                }
-
-                break;
-            default:
-                logger.error("Unknown date pattern for " + appId + ". " + dateString);
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d MMM, yyyy", Locale.US);
+            releaseDate = simpleDateFormat.parse(dateString);
+        } catch (ParseException e) {
+            logger.warn("Could not parse release date for appId " + appId, e);
         }
     }
 
@@ -208,7 +189,7 @@ public class SteamAppBuilder {
         Map<Object, Object> metacriticMap = (Map<Object, Object>) dataMap.get(METACRITIC);
 
         if (metacriticMap == null) {
-            logger.warn("No metacritic data found for " + appId + " - " + name);
+            logger.info("No metacritic data found for " + appId + " - " + name);
             return;
         }
 

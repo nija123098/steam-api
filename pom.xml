@@ -39,9 +39,6 @@
     </scm>
 
     <properties>
-        <surefire.version>2.19.1</surefire.version>
-        <e2e.test.pattern>e2e/**/*Test.java</e2e.test.pattern>
-        <unit.test.pattern>com/github/goive/steamapi/**/*Test.java</unit.test.pattern>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -94,12 +91,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${surefire.version}</version>
-                <configuration>
-                    <excludes>
-                        <exclude>${e2e.test.pattern}</exclude>
-                    </excludes>
-                </configuration>
+                <version>2.19.1</version>
             </plugin>
         </plugins>
     </build>
@@ -193,29 +185,6 @@
                                 </goals>
                             </execution>
                         </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>e2e</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${surefire.version}</version>
-                        <configuration>
-                            <includes>
-                                <include>${e2e.test.pattern}</include>
-                            </includes>
-                            <excludes>
-                                <exclude>${unit.test.pattern}</exclude>
-                            </excludes>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
