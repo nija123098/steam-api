@@ -79,12 +79,10 @@ public class SteamAppConvenienceMethodsTest {
     }
 
     private Price createPrice(int discount, int finalPrice, int initialPrice) {
-        Price price = new Price();
-        price.setCurrency(Currency.getInstance("USD"));
-        price.setDiscountPercent(discount);
-        price.setFinalPrice(BigDecimal.valueOf(finalPrice));
-        price.setInitialPrice(BigDecimal.valueOf(initialPrice));
-        return price;
+        return new Price(Currency.getInstance("USD"),
+                BigDecimal.valueOf(initialPrice),
+                BigDecimal.valueOf(finalPrice),
+                discount);
     }
 
     private SteamApp createSteamApp(Price price) {
