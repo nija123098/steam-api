@@ -229,6 +229,40 @@ public final class SteamApp implements Comparable<SteamApp> {
         return false;
     }
 
+    /**
+     * Convenience check if steam app is cheaper than the targetPrice.
+     *
+     * @param targetPrice The target price
+     * @return true if below or equal to target price
+     */
+    public boolean isCheaperThan(Double targetPrice) {
+        return isCheaperThan(BigDecimal.valueOf(targetPrice));
+    }
+
+    /**
+     * Convenience check if steam app is cheaper than the targetPrice.
+     *
+     * @param targetPrice The target price
+     * @return true if below or equal to target price
+     */
+    public boolean isCheaperThan(Integer targetPrice) {
+        return isCheaperThan(BigDecimal.valueOf(targetPrice));
+    }
+
+    /**
+     * Convenience check if steam app is cheaper than the targetPrice.
+     *
+     * @param targetPrice The target price
+     * @return true if below or equal to target price
+     */
+    public boolean isCheaperThan(BigDecimal targetPrice) {
+        if (isFreeToPlay()) {
+            return true;
+        }
+
+        return price.getFinalPrice().compareTo(targetPrice) == -1;
+    }
+
     public static class Price {
 
         private Currency currency;

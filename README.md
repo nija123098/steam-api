@@ -31,18 +31,12 @@ public class DemoApp {
             // Fetches information about the steam game including pricing
             SteamApp steamApp = steamApi.retrieve("70");
 
-            // Use the getters to retrieve data.
-            Date releaseDate = steamApp.getReleaseDate();
-            List<String> supportedLanguages = steamApp.getSupportedLanguages();
-            String name = steamApp.getName();
-            BigDecimal finalPrice = steamApp.getPrice().getFinalPrice();
-            // ... and so on
-
-            // Convenience methods
-            boolean freeToPlay = steamApp.isFreeToPlay();
-            boolean discounted = steamApp.isDiscounted();
-            boolean discountedByAtLeast20Percent = steamApp.isDiscountedByAtLeast(20);
-            boolean inAnyCategory = steamApp.isInAnyCategory("Single-player", "Multi-player");
+            // Use the getters to retrieve data or these convenience methods
+            steamApp.isFreeToPlay();
+            steamApp.isCheaperThan(15.99); // supports BigDecimal, Double and Integer
+            steamApp.isDiscounted();
+            steamApp.isDiscountedByAtLeast(20);
+            steamApp.isInAnyCategory("Single-player", "Multi-player");
         } catch (SteamApiException e) {
             // Exception needs to be thrown here in case of invalid appId or service downtime
             e.printStackTrace();
@@ -76,55 +70,6 @@ compile 'com.github.go-ive:steam-api:5.0'
 
 Or download the JAR directly from [Maven Central](https://oss.sonatype.org/content/repositories/releases/com/github/go-ive/steam-api/5.0/steam-api-5.0.jar).
 
-## Change Log
+## Contribution
 
-### 5.0
-* Major API overhaul and slimming down of code.
-
-### 4.3
-* Ensured compatibility with Java 7 for Android Projects. (Based on Issue #12)
-
-### 4.2
-* Merged pull request #11: Type "DLC" is now available in SteamApp.
-
-### 4.1
-* Added method to retrieve all possible SteamIds
-
-### 4.0
-* Introduced SteamId objects and new Retrieval API
-* Deprecated old API (retrieveApp with long parameter)
-
-### 3.0.1
-* Fixed invalid app id exception for unreleased games
-
-### 3.0
-* Major restructuring including test coverage
-* API change
-* Better appId caching
-* Removed InvalidAppIdException - now only SteamApiExceptions are thrown
-* Removed a lot of boilerplate/goldplate code
-
-### 2.1.2
-* Fixed cast error
-* Now validating appIds against the steam API directly
-
-### 2.1.1
-* Reworked SteamApp building process
-* Added option to specify country code to retrieve prices from other areas
-
-### 2.1.0
-* SteamApp object is now immutable
-* Merged pull request by KingFaris10
-
-### 2.0
-* SteamApi is now an interface with corresponding implementation
-* New retrieveData method that takes a list of appIds and returns a list of SteamApps
-* SteamApp.getPrice() now returns null if the game is free to play
-
-### 1.1.0
-* Changed package declarations to (almost) match group id. Update your import statements.
-* SteamApiException is now unchecked.
-* Added Slf4J logging.
-* Support Information is now parsed and accessible in SteamApp object.
-* Added javadoc.
-* SteamApiClient is now an interface with a corresponding implementation.
+Feel free to open an issue or send me a pull request for any problems you discover or features you would like included.
