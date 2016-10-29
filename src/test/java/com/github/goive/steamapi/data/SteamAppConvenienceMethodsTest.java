@@ -1,5 +1,6 @@
 package com.github.goive.steamapi.data;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -14,10 +15,13 @@ public class SteamAppConvenienceMethodsTest {
 
     private SteamApp steamApp;
 
+    @Before
+    public void setup() {
+        steamApp = createSteamApp(null);
+    }
+
     @Test
     public void f2pGameShouldNotBeDiscounted() {
-        steamApp = createSteamApp(null);
-
         assertTrue(steamApp.isFreeToPlay());
         assertFalse(steamApp.isDiscounted());
         assertFalse(steamApp.isDiscountedByAtLeast(10));
@@ -56,22 +60,16 @@ public class SteamAppConvenienceMethodsTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void discountedCheckShouldNotAllowLowerThan0Percentage() {
-        steamApp = createSteamApp(null);
-
         steamApp.isDiscountedByAtLeast(-1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void discountedCheckShouldNotAllowHigherThan100Percentage() {
-        steamApp = createSteamApp(null);
-
         steamApp.isDiscountedByAtLeast(101);
     }
 
     @Test
     public void shouldContainAnyCategory() {
-        steamApp = createSteamApp(null);
-
         assertTrue(steamApp.isInAnyCategory("c1"));
         assertTrue(steamApp.isInAnyCategory("c2", "c1"));
         assertFalse(steamApp.isInAnyCategory("c3"));

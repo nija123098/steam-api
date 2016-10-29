@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.goive.steamapi.data.SteamApp;
 import com.github.goive.steamapi.data.SteamAppBuilder;
 import com.github.goive.steamapi.exceptions.SteamApiException;
+import com.github.goive.steamapi.utils.AppIdMatcherUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ public class SteamApi {
     private ObjectMapper mapper = new ObjectMapper();
     private String countryCode;
     private Map<Integer, String> appCache = new HashMap<>();
+    private AppIdMatcherUtil matcherUtil = new AppIdMatcherUtil(appCache);
 
     public SteamApi() {
         this(Locale.getDefault().getCountry());
@@ -48,7 +50,6 @@ public class SteamApi {
             throw new SteamApiException("Invalid appId given: " + appId);
         }
 
-
         return new SteamAppBuilder().withResultMap(resultBodyMap).build();
     }
 
@@ -57,7 +58,15 @@ public class SteamApi {
     }
 
     /**
-     * Retrieves a steam game using its app name. If multiple entries exist, only the first will be taken.
+     * Retrieves a steam game using its app name.
+     * <p>
+     * <b>Use this method with caution!</b> If no matching entry is found, this method will take any appName
+     * that has the string's best levensthein distance, even if it has no relation to the search term. Consider
+     * this method as experimental.
+     * <p>
+     * There are games on steam with exactly the same name and different
+     * appIds. If you want to be sure which game you mean, use the appId instead of the appName to retrieve it.
+     * The appId can be found in the URL of the game's entry on the steam page.
      *
      * @param appName The full or partial name of the game
      * @return {@link SteamApp} containing information of the game
@@ -72,27 +81,14 @@ public class SteamApi {
             buildAppCache();
         }
 
-        int bestMatch = findBestMatch(appName);
-        if (bestMatch != -1) {
-            return retrieve(bestMatch);
-        }
-
-        throw new SteamApiException("No appId found for given app name: " + appName);
-    }
-
-    private int findBestMatch(String appName) {
-        int currentLowestDistance = 1000;
-        int currentBestMatchAppId = -1;
-
-        for (int appId : appCache.keySet()) {
-            int currentDistance;
-            if ((currentDistance = StringUtils.getLevenshteinDistance(appCache.get(appId), appName)) < currentLowestDistance) {
-                currentLowestDistance = currentDistance;
-                currentBestMatchAppId = appId;
+        String bestMatch = matcherUtil.findBestMatch(appName);
+        for (Integer appId : appCache.keySet()) {
+            if (bestMatch.equals(appCache.get(appId))) {
+                return retrieve(appId);
             }
         }
 
-        return currentBestMatchAppId;
+        throw new SteamApiException("No appId found for given app name: " + appName);
     }
 
     /**
@@ -113,6 +109,10 @@ public class SteamApi {
      * @throws SteamApiException if service not available
      */
     public List<Integer> listAppIds(boolean forceRefresh) throws SteamApiException {
+        if (forceRefresh) {
+            buildAppCache();
+        }
+
         if (!appCache.isEmpty()) {
             return new ArrayList<>(appCache.keySet());
         }
@@ -135,7 +135,6 @@ public class SteamApi {
         Map apps = (Map) appMap.get("apps");
         List appList = (List) apps.get("app");
 
-        appCache = new HashMap<>();
         for (Object app : appList) {
             Map appItem = (Map) app;
             appCache.put((Integer) appItem.get("appid"), appItem.get("name").toString());
