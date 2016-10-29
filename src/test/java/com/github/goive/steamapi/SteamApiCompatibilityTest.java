@@ -2,7 +2,6 @@ package com.github.goive.steamapi;
 
 import com.github.goive.steamapi.data.SteamApp;
 import com.github.goive.steamapi.exceptions.SteamApiException;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,9 +12,9 @@ import static org.junit.Assert.*;
 
 public class SteamApiCompatibilityTest {
 
-    private static final String HALF_LIFE_APP_ID = "70";
-    private static final String NOT_EXISTING_ID = "7099999999999";
-    private static final String CURRENCY_ID = "10180";
+    private static final int HALF_LIFE_APP_ID = 70;
+    private static final int NOT_EXISTING_ID = 709999999;
+    private static final int CURRENCY_ID = 10180;
 
     private SteamApi steamApi;
 
@@ -90,9 +89,17 @@ public class SteamApiCompatibilityTest {
 
     @Test
     public void shouldSuccessfullyRetrieveValidAppIds() throws SteamApiException {
-        List<String> appIds = steamApi.listIds();
+        List<Integer> appIds = steamApi.listAppIds();
 
         // 15721 AppIds as of 17.02.2015
-        Assert.assertTrue(appIds.size() > 15000);
+        assertTrue(appIds.size() > 15000);
+    }
+
+    @Test
+    public void shouldRetrieveSteamAppByName() throws SteamApiException {
+        steamApi.setCountryCode("US");
+
+        SteamApp steamApp = steamApi.retrieve("Half-Life");
+        assertEquals(steamApp.getName(), "Half-Life");
     }
 }
