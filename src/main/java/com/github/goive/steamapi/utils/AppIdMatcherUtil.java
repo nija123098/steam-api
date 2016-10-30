@@ -4,8 +4,8 @@ import com.github.goive.steamapi.exceptions.SteamApiException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class AppIdMatcherUtil {
@@ -17,16 +17,20 @@ public class AppIdMatcherUtil {
     }
 
     public String findBestMatch(String appName) throws SteamApiException {
-        Set<String> entriesContainingAppName = appCache.values()
-                .stream()
-                .filter(existingAppName -> StringUtils.containsIgnoreCase(existingAppName, appName))
-                .collect(Collectors.toSet());
+        List<String> entriesContainingAppName = findBestMatches(appName);
 
         if (entriesContainingAppName.isEmpty()) {
             return getBestMatchBasedOnLevenshteinDistance(appName, appCache.values());
         } else {
             return getBestMatchBasedOnLevenshteinDistance(appName, entriesContainingAppName);
         }
+    }
+
+    public List<String> findBestMatches(String appName) {
+        return appCache.values()
+                .stream()
+                .filter(existingAppName -> StringUtils.containsIgnoreCase(existingAppName, appName))
+                .collect(Collectors.toList());
     }
 
     private String getBestMatchBasedOnLevenshteinDistance(String appName, Collection<String> entries) {

@@ -9,7 +9,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class SteamApi {
 
@@ -92,34 +95,34 @@ public class SteamApi {
     }
 
     /**
-     * Retrieves a list of all possible appIds.
+     * Retrieves a map of all possible apps.
      *
-     * @return {@link List} of existing appIds
+     * @return {@link Map} of existing appIds and game names
      * @throws SteamApiException if service not available
      */
-    public List<Integer> listAppIds() throws SteamApiException {
-        return listAppIds(false);
+    public Map<Integer, String> listApps() throws SteamApiException {
+        return listApps(false);
     }
 
     /**
-     * Retrieves a list of all possible appIds.
+     * Retrieves a map of all possible apps.
      *
      * @param forceRefresh ensure that the newest ids are fetched
-     * @return {@link List} of existing appIds
+     * @return {@link Map} of existing appIds and game names
      * @throws SteamApiException if service not available
      */
-    public List<Integer> listAppIds(boolean forceRefresh) throws SteamApiException {
+    public Map<Integer, String> listApps(boolean forceRefresh) throws SteamApiException {
         if (forceRefresh) {
             buildAppCache();
         }
 
         if (!appCache.isEmpty()) {
-            return new ArrayList<>(appCache.keySet());
+            return new HashMap<>(appCache);
         }
 
         buildAppCache();
 
-        return new ArrayList<>(appCache.keySet());
+        return new HashMap<>(appCache);
     }
 
     private void buildAppCache() throws SteamApiException {

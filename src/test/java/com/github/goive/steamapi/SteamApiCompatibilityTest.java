@@ -89,7 +89,7 @@ public class SteamApiCompatibilityTest {
 
     @Test
     public void shouldSuccessfullyRetrieveValidAppIds() throws SteamApiException {
-        List<Integer> appIds = steamApi.listAppIds();
+        Map<Integer, String> appIds = steamApi.listApps();
 
         // 15721 AppIds as of 17.02.2015
         assertTrue(appIds.size() > 15000);
