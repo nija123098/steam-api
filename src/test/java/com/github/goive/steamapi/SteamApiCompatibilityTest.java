@@ -5,7 +5,6 @@ import com.github.goive.steamapi.exceptions.SteamApiException;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -49,9 +48,8 @@ public class SteamApiCompatibilityTest {
         assertEquals("Website", "http://www.half-life.com/", halfLife.getWebsite());
         assertEquals("Developers", Arrays.asList("Valve"), halfLife.getDevelopers());
         assertEquals("Publishers", Arrays.asList("Valve"), halfLife.getPublishers());
-        assertNotNull("Has price", halfLife.getPrice());
-        assertTrue("Final Price over 0", halfLife.getPrice().getFinalPrice().compareTo(BigDecimal.ONE) == 1);
-        assertTrue("Initial Price over 0", halfLife.getPrice().getInitialPrice().compareTo(BigDecimal.ONE) == 1);
+        assertTrue("Final Price over 0", halfLife.getPrice() > 0);
+        assertTrue("Initial Price over 0", halfLife.getPriceInitial() > 0);
         assertTrue("Windows", halfLife.isAvailableForWindows());
         assertTrue("Linux", halfLife.isAvailableForLinux());
         assertTrue("Mac", halfLife.isAvailableForMac());
@@ -75,7 +73,7 @@ public class SteamApiCompatibilityTest {
 
         SteamApp steamApp = steamApi.retrieve(CURRENCY_ID);
 
-        assertEquals(Currency.getInstance("USD"), steamApp.getPrice().getCurrency());
+        assertEquals(Currency.getInstance("USD"), steamApp.getPriceCurrency());
     }
 
     @Test
@@ -84,7 +82,7 @@ public class SteamApiCompatibilityTest {
 
         SteamApp steamApp = steamApi.retrieve(CURRENCY_ID);
 
-        assertEquals(Currency.getInstance("RUB"), steamApp.getPrice().getCurrency());
+        assertEquals(Currency.getInstance("RUB"), steamApp.getPriceCurrency());
     }
 
     @Test

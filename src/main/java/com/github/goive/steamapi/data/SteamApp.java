@@ -140,12 +140,64 @@ public final class SteamApp implements Comparable<SteamApp> {
     }
 
     /**
-     * Returns pricing information of the application.
+     * Returns the current price of the steam game after discount. Shortcut method for {@link SteamApp#getPriceFinal()}
      *
-     * @return {@link Price} containing further pricing information. If empty, the application is free.
+     * @return current price of the steam game
      */
-    public Price getPrice() {
-        return price;
+    public double getPrice() {
+        return getPriceFinal();
+    }
+
+    /**
+     * Returns the current price of the steam game after discount.
+     *
+     * @return current price of the steam game
+     */
+    public double getPriceFinal() {
+        if (price == null || price.getFinalPrice() == null) {
+            return 0;
+        }
+
+        return price.getFinalPrice().doubleValue();
+    }
+
+    /**
+     * Returns the price of the steam game before discount.
+     *
+     * @return price of the undiscounted steam game
+     */
+    public double getPriceInitial() {
+        if (price == null || price.getInitialPrice() == null) {
+            return 0;
+        }
+
+        return price.getInitialPrice().doubleValue();
+    }
+
+    /**
+     * Returns the percentage of the discount currently applied on the steam game.
+     *
+     * @return percentage of discount for steam game
+     */
+    public int getPriceDiscountPercentage() {
+        if (price == null) {
+            return 0;
+        }
+
+        return price.getDiscountPercent();
+    }
+
+    /**
+     * Returns the currency of the price for the steam game.
+     *
+     * @return {@link Currency} of price. <i>null</i> if no price info or free to play
+     */
+    public Currency getPriceCurrency() {
+        if (price == null) {
+            return null;
+        }
+
+        return price.getCurrency();
     }
 
     /**
@@ -263,7 +315,7 @@ public final class SteamApp implements Comparable<SteamApp> {
         return price.getFinalPrice().compareTo(targetPrice) == -1;
     }
 
-    public static class Price {
+    static class Price {
 
         private Currency currency;
         private BigDecimal initialPrice;
