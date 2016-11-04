@@ -1,6 +1,5 @@
 package com.github.goive.steamapi.data;
 
-import com.github.goive.steamapi.exceptions.SteamApiException;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
@@ -36,18 +35,16 @@ public class SteamAppBuilder {
     private String supportEmail;
     private List<String> genres;
 
-    public SteamAppBuilder withResultMap(Map<Object, Object> resultMap) throws SteamApiException {
+    public SteamAppBuilder(Map<Object, Object> resultMap) {
         Set<Object> keySet = resultMap.keySet();
         for (Object key : keySet) {
             appId = (String) key;
 
             fillFields(resultMap);
         }
-
-        return this;
     }
 
-    private void fillFields(Map<Object, Object> resultMap) throws SteamApiException {
+    private void fillFields(Map<Object, Object> resultMap) {
         Map<Object, Object> innerMap = (Map<Object, Object>) resultMap.get(appId);
         Map<Object, Object> dataMap = (Map<Object, Object>) innerMap.get("data");
 

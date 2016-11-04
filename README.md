@@ -14,9 +14,7 @@ import com.github.goive.steamapi.SteamApi;
 import com.github.goive.steamapi.data.SteamApp;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 public class DemoApp {
 
@@ -25,11 +23,12 @@ public class DemoApp {
         SteamApi steamApi = new SteamApi("US");
 
         try {
-            // Retrieves a list of all possible steam Ids, in case you want to pre-check
-            List<String> steamIds = steamApi.listIds();
+            // Retrieves a list of all possible steam appIds along with name, in case you want to pre-check
+            Map<Integer, String> appList = steamApi.listApps();
 
             // Fetches information about the steam game including pricing
-            SteamApp steamApp = steamApi.retrieve("70");
+            SteamApp steamApp = steamApi.retrieve(70); // by appId (exact match)
+            SteamApp steamApp2 = steamApi.retrieve("Half-Life"); // by name (fuzzy)
 
             // Use the getters to retrieve data or these convenience methods
             steamApp.isFreeToPlay();

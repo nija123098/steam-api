@@ -349,8 +349,8 @@ public final class SteamApp implements Comparable<SteamApp> {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder() //
-                .append(appId) //
+        return new HashCodeBuilder()
+                .append(appId)
                 .hashCode();
     }
 
@@ -366,35 +366,35 @@ public final class SteamApp implements Comparable<SteamApp> {
 
         SteamApp other = (SteamApp) obj;
 
-        return new EqualsBuilder() //
-                .append(appId, other.appId) //
+        return new EqualsBuilder()
+                .append(appId, other.appId)
                 .isEquals();
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(appId) //
-                .append(type) //
-                .append(name) //
-                .append(requiredAge) //
-                .append(detailedDescription) //
-                .append(aboutTheGame) //
-                .append(supportedLanguages) //
-                .append(headerImage) //
-                .append(website) //
-                .append(price) //
-                .append(developers) //
-                .append(publishers) //
-                .append(availableForLinux) //
-                .append(availableForWindows) //
-                .append(availableForMac) //
-                .append(categories) //
-                .append(releaseDate) //
-                .append(metacriticScore) //
-                .append(metacriticUrl) //
-                .append(supportUrl) //
-                .append(supportEmail) //
-                .append(genres) //
+        return new ToStringBuilder(appId)
+                .append(type)
+                .append(name)
+                .append(requiredAge)
+                .append(detailedDescription)
+                .append(aboutTheGame)
+                .append(supportedLanguages)
+                .append(headerImage)
+                .append(website)
+                .append(price)
+                .append(developers)
+                .append(publishers)
+                .append(availableForLinux)
+                .append(availableForWindows)
+                .append(availableForMac)
+                .append(categories)
+                .append(releaseDate)
+                .append(metacriticScore)
+                .append(metacriticUrl)
+                .append(supportUrl)
+                .append(supportEmail)
+                .append(genres)
                 .toString();
     }
 

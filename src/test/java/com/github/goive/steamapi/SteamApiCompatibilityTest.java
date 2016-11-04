@@ -29,6 +29,7 @@ public class SteamApiCompatibilityTest {
         SteamApp halfLife = steamApi.retrieve(HALF_LIFE_APP_ID);
 
         assertNotNull(halfLife);
+        assertEquals("AppID", "70", halfLife.getAppId());
         assertEquals("Name", "Half-Life", halfLife.getName());
         assertEquals("Type", "game", halfLife.getType());
         assertEquals("Required Age", 0, halfLife.getRequiredAge());

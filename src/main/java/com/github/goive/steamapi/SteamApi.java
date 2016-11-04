@@ -53,7 +53,7 @@ public class SteamApi {
             throw new SteamApiException("Invalid appId given: " + appId);
         }
 
-        return new SteamAppBuilder().withResultMap(resultBodyMap).build();
+        return new SteamAppBuilder(resultBodyMap).build();
     }
 
     private boolean successfullyRetrieved(Map resultBodyMap, int appId) {
