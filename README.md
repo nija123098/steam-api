@@ -69,6 +69,26 @@ compile 'com.github.go-ive:steam-api:5.0'
 
 Or download the JAR directly from [Maven Central](https://oss.sonatype.org/content/repositories/releases/com/github/go-ive/steam-api/5.0/steam-api-5.0.jar).
 
+### Older Versions
+
+If you require the a previous version, replace the version in your dependency or URL with one of these:
+
+* 4.3
+* 4.2
+* 4.1
+* 4.0
+* 3.0.1
+* 3.0.0
+* 2.1.2
+* 2.1.1
+* 2.1
+* 2.0
+* 1.1.0
+* 1.0.0
+
+Bear in mind though that none of the versions before 5.0 are supported anymore and will likely not work with the current
+storefront API.
+
 ## Contribution
 
 Feel free to open an issue or send me a pull request for any problems you discover or features you would like included.
