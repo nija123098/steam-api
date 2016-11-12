@@ -47,22 +47,26 @@ public final class SteamApp implements Comparable<SteamApp> {
              List<String> publishers, boolean availableForLinux, boolean availableForWindows, boolean availableForMac,
              List<String> categories, Date releaseDate, Integer metacriticScore, String metacriticUrl,
              String supportUrl, String supportEmail, List<String> genres) {
+
+        if (price == null)
+            throw new NullPointerException("App price cannot be null");
+
         this.appId = appId;
         this.type = type;
         this.name = name;
         this.requiredAge = requiredAge;
         this.detailedDescription = detailedDescription;
         this.aboutTheGame = aboutTheGame;
-        this.supportedLanguages = supportedLanguages;
+        this.supportedLanguages = Collections.unmodifiableList(supportedLanguages);
         this.headerImage = headerImage;
         this.website = website;
         this.price = price;
-        this.developers = developers;
-        this.publishers = publishers;
+        this.developers = Collections.unmodifiableList(developers);
+        this.publishers = Collections.unmodifiableList(publishers);
         this.availableForLinux = availableForLinux;
         this.availableForWindows = availableForWindows;
         this.availableForMac = availableForMac;
-        this.categories = categories;
+        this.categories = Collections.unmodifiableList(categories);
         this.releaseDate = releaseDate;
         this.metacriticScore = metacriticScore;
         this.metacriticUrl = metacriticUrl;
@@ -96,7 +100,7 @@ public final class SteamApp implements Comparable<SteamApp> {
     }
 
     public List<String> getSupportedLanguages() {
-        return Collections.unmodifiableList(supportedLanguages);
+        return supportedLanguages;
     }
 
     public String getHeaderImage() {
@@ -108,11 +112,11 @@ public final class SteamApp implements Comparable<SteamApp> {
     }
 
     public List<String> getDevelopers() {
-        return Collections.unmodifiableList(developers);
+        return developers;
     }
 
     public List<String> getPublishers() {
-        return Collections.unmodifiableList(publishers);
+        return publishers;
     }
 
     public boolean isAvailableForLinux() {
@@ -154,10 +158,6 @@ public final class SteamApp implements Comparable<SteamApp> {
      * @return current price of the steam game
      */
     public double getPriceFinal() {
-        if (price == null || price.getFinalPrice() == null) {
-            return 0;
-        }
-
         return price.getFinalPrice().doubleValue();
     }
 
@@ -167,10 +167,6 @@ public final class SteamApp implements Comparable<SteamApp> {
      * @return price of the undiscounted steam game
      */
     public double getPriceInitial() {
-        if (price == null || price.getInitialPrice() == null) {
-            return 0;
-        }
-
         return price.getInitialPrice().doubleValue();
     }
 
@@ -180,10 +176,6 @@ public final class SteamApp implements Comparable<SteamApp> {
      * @return percentage of discount for steam game
      */
     public int getPriceDiscountPercentage() {
-        if (price == null) {
-            return 0;
-        }
-
         return price.getDiscountPercent();
     }
 
@@ -193,10 +185,6 @@ public final class SteamApp implements Comparable<SteamApp> {
      * @return {@link Currency} of price. <i>null</i> if no price info or free to play
      */
     public Currency getPriceCurrency() {
-        if (price == null) {
-            return null;
-        }
-
         return price.getCurrency();
     }
 
@@ -206,7 +194,7 @@ public final class SteamApp implements Comparable<SteamApp> {
      * @return A list of {@link String} objects containing categories like "single player".
      */
     public List<String> getCategories() {
-        return Collections.unmodifiableList(categories);
+        return categories;
     }
 
     public String getSupportUrl() {
@@ -218,7 +206,7 @@ public final class SteamApp implements Comparable<SteamApp> {
     }
 
     public List<String> getGenres() {
-        return Collections.unmodifiableList(genres);
+        return genres;
     }
 
     /**
@@ -227,11 +215,7 @@ public final class SteamApp implements Comparable<SteamApp> {
      * @return true if game is free to play.
      */
     public boolean isFreeToPlay() {
-        if (price == null) {
-            return true;
-        }
-
-        return price.getFinalPrice().compareTo(BigDecimal.ZERO) == 0;
+        return price.getFinalPrice().equals(BigDecimal.ZERO);
     }
 
     /**
@@ -252,10 +236,6 @@ public final class SteamApp implements Comparable<SteamApp> {
     public boolean isDiscountedByAtLeast(int percent) {
         if (percent < 0 || percent > 100) {
             throw new IllegalArgumentException("Percentage must be between 0 and 100");
-        }
-
-        if (price == null) {
-            return false;
         }
 
         return price.getDiscountPercent() >= percent;
@@ -317,15 +297,24 @@ public final class SteamApp implements Comparable<SteamApp> {
 
     static class Price {
 
-        private Currency currency;
-        private BigDecimal initialPrice;
-        private BigDecimal finalPrice;
-        private int discountPercent;
+        private final Currency currency;
+        private final BigDecimal initialPrice;
+        private final BigDecimal finalPrice;
+        private final int discountPercent;
 
         Price(Currency currency, BigDecimal initialPrice, BigDecimal finalPrice, int discountPercent) {
+            if (currency == null)
+                throw new NullPointerException("Price currency cannot be null");
+
+            if (initialPrice == null)
+                throw new NullPointerException("Initial price cannot be null");
+
+            if (finalPrice == null)
+                throw new NullPointerException("Final price cannot be null");
+
             this.currency = currency;
-            this.initialPrice = initialPrice;
-            this.finalPrice = finalPrice;
+            this.initialPrice = new BigDecimal(initialPrice.toString());
+            this.finalPrice = new BigDecimal(finalPrice.toString());
             this.discountPercent = discountPercent;
         }
 
@@ -334,11 +323,11 @@ public final class SteamApp implements Comparable<SteamApp> {
         }
 
         public BigDecimal getInitialPrice() {
-            return initialPrice;
+            return new BigDecimal(initialPrice.toString());
         }
 
         public BigDecimal getFinalPrice() {
-            return finalPrice;
+            return new BigDecimal(finalPrice.toString());
         }
 
         public int getDiscountPercent() {
