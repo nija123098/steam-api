@@ -317,8 +317,8 @@ public final class SteamApp implements Comparable<SteamApp> {
             }
 
             this.currency = currency;
-            this.initialPrice = new BigDecimal(initialPrice.toString());
-            this.finalPrice = new BigDecimal(finalPrice.toString());
+            this.initialPrice = initialPrice;
+            this.finalPrice = finalPrice;
             this.discountPercent = discountPercent;
         }
 
@@ -327,11 +327,11 @@ public final class SteamApp implements Comparable<SteamApp> {
         }
 
         public BigDecimal getInitialPrice() {
-            return new BigDecimal(initialPrice.toString());
+            return initialPrice;
         }
 
         public BigDecimal getFinalPrice() {
-            return new BigDecimal(finalPrice.toString());
+            return finalPrice;
         }
 
         public int getDiscountPercent() {
