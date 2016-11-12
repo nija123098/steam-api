@@ -12,8 +12,7 @@ public class SteamAppBuilder {
 
     private static final Logger logger = Logger.getLogger(SteamAppBuilder.class);
 
-    private static final Currency USD = Currency.getInstance("USD");
-    private static final Currency DEFAULT_CURRENCY = USD;
+    private static final Currency DEFAULT_CURRENCY = Currency.getInstance("USD");
 
     private static final Locale DEFAULT_LOCALE = Locale.US;
 
