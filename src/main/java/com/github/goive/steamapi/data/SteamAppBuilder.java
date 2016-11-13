@@ -12,8 +12,6 @@ public class SteamAppBuilder {
 
     private static final Logger logger = Logger.getLogger(SteamAppBuilder.class);
 
-    private static final Currency DEFAULT_CURRENCY = Currency.getInstance("USD");
-
     private static final Locale DEFAULT_LOCALE = Locale.US;
 
     private String appId;
@@ -105,7 +103,7 @@ public class SteamAppBuilder {
 
         if (priceOverview == null) {
             logger.info("No price data found. Assuming " + name + " is free to play.");
-            price = new SteamApp.Price(DEFAULT_CURRENCY, BigDecimal.ZERO, BigDecimal.ZERO, 0);
+            price = SteamApp.Price.FREE;
             return;
         }
 

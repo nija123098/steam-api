@@ -19,6 +19,8 @@ import java.util.List;
  */
 public final class SteamApp implements Comparable<SteamApp> {
 
+    public static final Currency DEFAULT_CURRENCY = Currency.getInstance("USD");
+
     private final String appId;
     private final String type;
     private final String name;
@@ -297,6 +299,8 @@ public final class SteamApp implements Comparable<SteamApp> {
     }
 
     static class Price {
+
+        public static final Price FREE = new Price(DEFAULT_CURRENCY, BigDecimal.ZERO, BigDecimal.ZERO, 0);
 
         private final Currency currency;
         private final BigDecimal initialPrice;
