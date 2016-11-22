@@ -3,10 +3,10 @@ package com.github.goive.steamapi.utils;
 import com.github.goive.steamapi.exceptions.SteamApiException;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class AppIdMatcherUtil {
 
@@ -27,10 +27,15 @@ public class AppIdMatcherUtil {
     }
 
     public List<String> findBestMatches(String appName) {
-        return appCache.values()
-                .stream()
-                .filter(existingAppName -> StringUtils.containsIgnoreCase(existingAppName, appName))
-                .collect(Collectors.toList());
+        List<String> result = new ArrayList<String>();
+
+        for (String existingAppName : appCache.values()) {
+            if (StringUtils.containsIgnoreCase(existingAppName, appName)) {
+                result.add(existingAppName);
+            }
+        }
+
+        return result;
     }
 
     private String getBestMatchBasedOnLevenshteinDistance(String appName, Collection<String> entries) {

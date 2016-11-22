@@ -16,7 +16,7 @@ public class AppIdMatcherUtilTest {
 
     @Before
     public void setup() {
-        appCache = new HashMap<>();
+        appCache = new HashMap<Integer, String>();
 
         appCache.put(1, "Counter-Strike: Condition Zero");
         appCache.put(2, "Half-Life: Opposing Force");

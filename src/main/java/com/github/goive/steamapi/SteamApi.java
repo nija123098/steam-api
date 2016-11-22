@@ -21,7 +21,7 @@ public class SteamApi {
 
     private ObjectMapper mapper = new ObjectMapper();
     private String countryCode;
-    private Map<Integer, String> appCache = new HashMap<>();
+    private Map<Integer, String> appCache = new HashMap<Integer, String>();
     private AppIdMatcherUtil matcherUtil = new AppIdMatcherUtil(appCache);
 
     public SteamApi() {
@@ -57,7 +57,7 @@ public class SteamApi {
     }
 
     private boolean successfullyRetrieved(Map resultBodyMap, int appId) {
-        return (boolean) ((Map) resultBodyMap.get(String.valueOf(appId))).get("success");
+        return Boolean.valueOf(((Map) resultBodyMap.get(String.valueOf(appId))).get("success").toString());
     }
 
     /**
@@ -117,12 +117,12 @@ public class SteamApi {
         }
 
         if (!appCache.isEmpty()) {
-            return new HashMap<>(appCache);
+            return new HashMap<Integer, String>(appCache);
         }
 
         buildAppCache();
 
-        return new HashMap<>(appCache);
+        return new HashMap<Integer, String>(appCache);
     }
 
     private void buildAppCache() throws SteamApiException {

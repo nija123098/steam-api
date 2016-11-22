@@ -59,7 +59,7 @@ public class SteamAppBuilder {
     }
 
     private void parseGenres(Map<Object, Object> dataMap) {
-        genres = new ArrayList<>();
+        genres = new ArrayList<String>();
 
         List<Object> genresMap = (List<Object>) dataMap.get("genres");
         if (genresMap != null) {
@@ -119,7 +119,7 @@ public class SteamAppBuilder {
     }
 
     private void parseCategoriesData(Map<Object, Object> dataMap) {
-        categories = new ArrayList<>();
+        categories = new ArrayList<String>();
 
         List<Object> categoriesMap = (List<Object>) dataMap.get("categories");
         if (categoriesMap == null) {
