@@ -51,7 +51,7 @@ public final class SteamApp implements Comparable<SteamApp> {
              String supportUrl, String supportEmail, List<String> genres) {
 
         if (price == null) {
-            throw new NullPointerException("App price cannot be null");
+            throw new IllegalArgumentException("App price cannot be null");
         }
 
         this.appId = appId;
@@ -309,15 +309,15 @@ public final class SteamApp implements Comparable<SteamApp> {
 
         Price(Currency currency, BigDecimal initialPrice, BigDecimal finalPrice, int discountPercent) {
             if (currency == null) {
-                throw new NullPointerException("Price currency cannot be null");
+                throw new IllegalArgumentException("Price currency cannot be null");
             }
 
             if (initialPrice == null) {
-                throw new NullPointerException("Initial price cannot be null");
+                throw new IllegalArgumentException("Initial price cannot be null");
             }
 
             if (finalPrice == null) {
-                throw new NullPointerException("Final price cannot be null");
+                throw new IllegalArgumentException("Final price cannot be null");
             }
 
             this.currency = currency;
