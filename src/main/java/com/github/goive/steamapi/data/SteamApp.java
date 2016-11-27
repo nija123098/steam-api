@@ -315,6 +315,16 @@ public final class SteamApp implements Comparable<SteamApp> {
         return price.getFinalPrice().compareTo(targetPrice) == -1;
     }
 
+    /**
+     * Convenience check if steam app is cheaper than the other app.
+     *
+     * @param otherApp The steam app to compare
+     * @return true if below or equal to target price
+     */
+    public boolean isCheaperThan(SteamApp otherApp) {
+        return isCheaperThan(otherApp.getPriceFinal());
+    }
+
     static class Price {
 
         private Currency currency;

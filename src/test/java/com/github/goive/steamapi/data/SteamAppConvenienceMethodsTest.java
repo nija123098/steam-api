@@ -94,6 +94,16 @@ public class SteamAppConvenienceMethodsTest {
         assertTrue(steamApp.isCheaperThan(11));
     }
 
+    @Test
+    public void shouldCheckIfCheaperThanOtherSteamApp() {
+        SteamApp cheaperApp = createSteamApp(createPrice(0, 10, 10));
+        SteamApp expensiveApp = createSteamApp(createPrice(0, 50, 50));
+
+        assertTrue(cheaperApp.isCheaperThan(expensiveApp));
+        assertFalse(expensiveApp.isCheaperThan(cheaperApp));
+        assertFalse(cheaperApp.isCheaperThan(cheaperApp));
+    }
+
     private SteamApp.Price createPrice(int discount, int finalPrice, int initialPrice) {
         return new SteamApp.Price(Currency.getInstance("USD"),
                 BigDecimal.valueOf(initialPrice),
