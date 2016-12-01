@@ -17,7 +17,8 @@ public class SteamAppConvenienceMethodsTest {
 
     @Before
     public void setup() {
-        steamApp = createSteamApp(null);
+        SteamApp.Price price = createPrice(0, 0, 0);
+        steamApp = createSteamApp(price);
     }
 
     @Test

@@ -12,6 +12,8 @@ public class SteamAppBuilder {
 
     private static final Logger logger = Logger.getLogger(SteamAppBuilder.class);
 
+    private static final Locale DEFAULT_LOCALE = Locale.US;
+
     private String appId;
     private String type;
     private String name;
@@ -101,6 +103,7 @@ public class SteamAppBuilder {
 
         if (priceOverview == null) {
             logger.info("No price data found. Assuming " + name + " is free to play.");
+            price = SteamApp.Price.FREE;
             return;
         }
 
@@ -141,7 +144,7 @@ public class SteamAppBuilder {
         String dateString = (String) releaseMap.get("date");
 
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d MMM, yyyy", Locale.US);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d MMM, yyyy", DEFAULT_LOCALE);
             releaseDate = simpleDateFormat.parse(dateString);
         } catch (ParseException e) {
             logger.warn("Could not parse release date for appId " + appId, e);
