@@ -90,12 +90,18 @@ public class SteamAppBuilder {
         String supportedLanguagesRaw = (String) dataMap.get("supported_languages");
         if (supportedLanguagesRaw != null) {
             supportedLanguages = Arrays.asList(supportedLanguagesRaw.split("\\s*,\\s*"));
+        } else {
+            supportedLanguages = new ArrayList<String>();
         }
 
         headerImage = (String) dataMap.get("header_image");
         website = (String) dataMap.get("website");
-        developers = (List<String>) dataMap.get("developers");
-        publishers = (List<String>) dataMap.get("publishers");
+        developers = dataMap.get("developers") == null
+                ? new ArrayList<String>()
+                : (List<String>) dataMap.get("developers");
+        publishers = dataMap.get("publishers") == null
+                ? new ArrayList<String>()
+                : (List<String>) dataMap.get("publishers");
     }
 
     private void parsePriceData(Map<Object, Object> dataMap) {
