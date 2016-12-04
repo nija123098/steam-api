@@ -1,10 +1,10 @@
 package com.github.goive.steamapi.data;
 
+import com.github.goive.steamapi.utils.DateParserUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @SuppressWarnings("unchecked")
@@ -12,7 +12,7 @@ public class SteamAppBuilder {
 
     private static final Logger logger = Logger.getLogger(SteamAppBuilder.class);
 
-    private static final Locale DEFAULT_LOCALE = Locale.US;
+    private Locale locale = Locale.US;
 
     private String appId;
     private String type;
@@ -44,6 +44,22 @@ public class SteamAppBuilder {
 
             fillFields(resultMap);
         }
+    }
+
+    public SteamAppBuilder withCountryCode(String countryCode) {
+        if (StringUtils.isBlank(countryCode)) {
+            throw new IllegalArgumentException("Explicitly given country code cannot be blank.");
+        }
+
+        Locale[] availableLocales = Locale.getAvailableLocales();
+        for (Locale locale : availableLocales) {
+            if (countryCode.equalsIgnoreCase(locale.getCountry())) {
+                this.locale = locale;
+                break;
+            }
+        }
+
+        return this;
     }
 
     private void fillFields(Map<Object, Object> resultMap) {
@@ -149,12 +165,8 @@ public class SteamAppBuilder {
         Map<Object, Object> releaseMap = (Map<Object, Object>) dataMap.get("release_date");
         String dateString = (String) releaseMap.get("date");
 
-        try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d MMM, yyyy", DEFAULT_LOCALE);
-            releaseDate = simpleDateFormat.parse(dateString);
-        } catch (ParseException e) {
-            logger.warn("Could not parse release date for appId " + appId, e);
-        }
+        DateParserUtil dateParserUtil = new DateParserUtil(locale);
+        releaseDate = dateParserUtil.parseDate(dateString);
     }
 
     private void parseMetacriticData(Map<Object, Object> dataMap) {
