@@ -44,7 +44,7 @@ public class SteamApiCompatibilityTest {
                 "friends and enemies around the world.", halfLife.getAboutTheGame());
         assertEquals("Languages", Arrays.asList("English", "French", "German", "Italian", "Spanish",
                 "Simplified Chinese", "Traditional Chinese", "Korean"), halfLife.getSupportedLanguages());
-        assertEquals("Header Image", "http://cdn.akamai.steamstatic.com/steam/apps/70/header.jpg?t=1447890508",
+        assertEquals("Header Image", "http://cdn.akamai.steamstatic.com/steam/apps/70/header.jpg?t=1493762285",
                 halfLife.getHeaderImage());
         assertEquals("Website", "http://www.half-life.com/", halfLife.getWebsite());
         assertEquals("Developers", Arrays.asList("Valve"), halfLife.getDevelopers());
