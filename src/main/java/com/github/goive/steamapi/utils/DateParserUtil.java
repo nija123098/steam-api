@@ -1,7 +1,8 @@
 package com.github.goive.steamapi.utils;
 
+import com.github.goive.steamapi.SteamApi;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,7 +12,7 @@ import java.util.regex.Pattern;
 
 public class DateParserUtil {
 
-    private final Logger logger = Logger.getLogger(getClass());
+    private final Logger logger = SteamApi.getLoggerInstance(DateParserUtil.class);
 
     private static final String PATTERN_EU = "d MMM, yyyy";
     private static final String PATTERN_US = "MMM d, yyyy";

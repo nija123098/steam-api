@@ -1,8 +1,9 @@
 package com.github.goive.steamapi.data;
 
+import com.github.goive.steamapi.SteamApi;
 import com.github.goive.steamapi.utils.DateParserUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -10,7 +11,7 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 public class SteamAppBuilder {
 
-    private static final Logger logger = Logger.getLogger(SteamAppBuilder.class);
+    private static final Logger logger = SteamApi.getLoggerInstance(SteamAppBuilder.class);
 
     private Locale locale = Locale.US;
 
