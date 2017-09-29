@@ -29,7 +29,7 @@ public class SteamApi {
 
     private ObjectMapper mapper = new ObjectMapper();
     private String countryCode;
-    private Map<Integer, String> appCache = new HashMap<Integer, String>();
+    private Map<Integer, String> appCache = new HashMap<>();
     private AppIdMatcherUtil matcherUtil = new AppIdMatcherUtil(appCache);
 
     public SteamApi() {
@@ -127,12 +127,12 @@ public class SteamApi {
         }
 
         if (!appCache.isEmpty()) {
-            return new HashMap<Integer, String>(appCache);
+            return new HashMap<>(appCache);
         }
 
         buildAppCache();
 
-        return new HashMap<Integer, String>(appCache);
+        return new HashMap<>(appCache);
     }
 
     private void buildAppCache() throws SteamApiException {
